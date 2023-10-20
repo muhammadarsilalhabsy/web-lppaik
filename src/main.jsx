@@ -4,22 +4,25 @@ import App from "./App.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import { Provider } from "react-redux";
+import { store } from "./store.js";
 
 import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
-    <App />
-    <ToastContainer
-      position="top-center"
-      autoClose={1250}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick={false}
-      rtl={false}
-      pauseOnFocusLoss={false}
-      draggable={false}
-      pauseOnHover={false}
-    />
+    <Provider store={store}>
+      <App />
+      <ToastContainer
+        position="top-center"
+        autoClose={1250}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+      />
+    </Provider>
   </>
 );

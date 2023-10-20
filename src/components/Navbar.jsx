@@ -1,11 +1,19 @@
-import { BsCart3, BsMoonFill, BsSunFill } from "react-icons/bs";
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import profile from "../assets/haha.jpeg";
+import { toggleTheme } from "../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const user = true;
+  function handleTheme() {
+    dispatch(toggleTheme());
+  }
+  const theme = useSelector((state) => state.userState.theme);
+  const isDarkTheme = theme === "dracula";
   return (
     <nav className="bg-base-200 shadow-xl">
       <div className="navbar align-element">
@@ -15,7 +23,7 @@ const Navbar = () => {
             to="/"
             className="hidden lg:flex btn btn-primary text-3xl items-center"
           >
-            A
+            L
           </NavLink>
           {/* DROPDOWN */}
           <div className="dropdown">
@@ -38,7 +46,11 @@ const Navbar = () => {
         <div className="navbar-end">
           {/* THEME SETUP */}
           <label className="swap swap-rotate">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={handleTheme}
+              defaultChecked={isDarkTheme}
+            />
             {/* SUN ICON*/}
             <BsSunFill className="swap-on h-5 w-5" />
             {/* MOON ICON*/}

@@ -1,6 +1,10 @@
 export { default as Error } from "./Error";
-
 export { default as Login } from "./Login";
-
 export { default as Register } from "./Register";
 export { default as HomeLayout } from "./HomeLayout";
+export { default as About } from "./About";
+export { default as Activity } from "./Activity";
+export { default as Certificate } from "./Certificate";
+export { default as Profile } from "./Profile";
+export { default as UserManagement } from "./UserManagement";
+export { default as Landing } from "./Landing";

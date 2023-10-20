@@ -11,10 +11,10 @@ const Hero = () => {
       <div>
         <h3 className="text-lg font-bold mb-2">Tingkatkan Kemampuan</h3>
 
-        <h1 className="font-bold text-3xl sm:text-5xl tracking-tight max-w-2xl">
+        <h1 className="font-bold text-4xl sm:text-5xl tracking-tight max-w-2xl">
           Baca Tulis Al-Quran Dengan Metode Yang Efektif Dan Efisien
         </h1>
-        <p className="mt-8 leading-8 max-w-xl  sm:text-lg capitalize">
+        <p className="mt-6 leading-8 max-w-xl  sm:text-lg capitalize">
           Menjadikan Civitas Akademik Universitas Muhammadiyah Kendari Bebas
           Buta Baca Tulis Al-Qur'an, Bertakwa dan Berakhlakul Karimah.
         </p>
