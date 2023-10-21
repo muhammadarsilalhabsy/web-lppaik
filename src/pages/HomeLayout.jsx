@@ -1,14 +1,15 @@
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { Header, Loading, Navbar } from "../components";
+import { useSelector } from "react-redux";
 
 const HomeLayout = () => {
   const navigation = useNavigation();
-  const user = true;
+  const user = useSelector((state) => state.userState.user);
 
   const isLoading = navigation.state === "loading";
   return (
     <>
-      {user && <Header />}
+      {!user && <Header />}
       <Navbar />
       {isLoading ? (
         <Loading />

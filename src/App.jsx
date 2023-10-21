@@ -13,6 +13,13 @@ import {
 } from "./pages";
 
 import { ErrorElement } from "./components";
+import { store } from "./store";
+
+// actions
+import { action as loginAction } from "./pages/Login";
+
+// loaders
+// import { loader as loginLoader } from "./pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +63,8 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     errorElement: <Error />,
+    // loader: loginLoader(store),
+    action: loginAction(store),
   },
   {
     path: "/register",

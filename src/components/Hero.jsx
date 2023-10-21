@@ -19,7 +19,7 @@ const Hero = () => {
           Buta Baca Tulis Al-Qur'an, Bertakwa dan Berakhlakul Karimah.
         </p>
         <div className="mt-10">
-          <Link to="/products" className="btn btn-primary">
+          <Link to="/activity" className="btn btn-primary">
             Lihat kegiatan
           </Link>
         </div>

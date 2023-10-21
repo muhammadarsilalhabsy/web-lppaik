@@ -1,19 +1,43 @@
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import profile from "../assets/haha.jpeg";
-import { toggleTheme } from "../features/user/userSlice";
+import { logoutUser, toggleTheme } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { customFetch } from "../utils";
 
 const Navbar = () => {
+  // selector
+  const user = useSelector((state) => state.userState.user);
+  const theme = useSelector((state) => state.userState.theme);
+  const isDarkTheme = theme === "dracula";
+  const IMG_URL = "http://localhost:8080/api/v1/image/";
+
+  // hooks
   const dispatch = useDispatch();
-  const user = true;
+  const navigate = useNavigate();
+
+  // handle
   function handleTheme() {
     dispatch(toggleTheme());
   }
-  const theme = useSelector((state) => state.userState.theme);
-  const isDarkTheme = theme === "dracula";
+
+  const handleLogout = async () => {
+    try {
+      const response = await customFetch.delete("/auth/logout", {
+        headers: {
+          "X-API-TOKEN": user.token,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+
+    navigate("/");
+    dispatch(logoutUser());
+  };
   return (
     <nav className="bg-base-200 shadow-xl">
       <div className="navbar align-element">
@@ -64,7 +88,10 @@ const Navbar = () => {
               tabIndex={0}
             >
               <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={profile} alt="profile" />
+                <img
+                  src={user.avatar ? IMG_URL + user.avatar : profile}
+                  alt="profile"
+                />
               </div>
               <ul
                 tabIndex={0}
@@ -75,7 +102,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    // onClick={handelLogout}
+                    onClick={handleLogout}
                     className="text-error hover:text-red-500 "
                   >
                     Keluar
