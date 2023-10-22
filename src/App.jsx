@@ -10,6 +10,8 @@ import {
   Certificate,
   UserManagement,
   Profile,
+  MyActivity,
+  ControlBook,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -20,6 +22,8 @@ import { action as loginAction } from "./pages/Login";
 
 // loaders
 // import { loader as loginLoader } from "./pages/Login";
+import { loader as myActivityLoader } from "./pages/MyActivity";
+import { loader as controlBookLoader } from "./pages/ControlBook";
 
 const router = createBrowserRouter([
   {
@@ -53,21 +57,33 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <Profile />,
         errorElement: <ErrorElement />,
+      },
+      {
+        path: "my-activity",
+        element: <MyActivity />,
+        errorElement: <ErrorElement />,
+        loader: myActivityLoader(store),
+      },
+      {
+        path: "control-book",
+        element: <ControlBook />,
+        errorElement: <ErrorElement />,
+        loader: controlBookLoader(store),
       },
     ],
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
     errorElement: <Error />,
     // loader: loginLoader(store),
     action: loginAction(store),
   },
   {
-    path: "/register",
+    path: "register",
     element: <Register />,
     errorElement: <Error />,
   },

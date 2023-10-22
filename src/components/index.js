@@ -7,3 +7,6 @@ export { default as Navbar } from "./Navbar";
 export { default as Header } from "./Header";
 export { default as Hero } from "./Hero";
 export { default as FeaturedActivities } from "./FeaturedActivities";
+export { default as User } from "./User";
+export { default as UserDetail } from "./UserDetail";
+export { default as ActivityList } from "./ActivityList";

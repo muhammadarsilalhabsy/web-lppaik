@@ -6,6 +6,7 @@ import profile from "../assets/haha.jpeg";
 import { logoutUser, toggleTheme } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { customFetch } from "../utils";
+import UserLinks from "./UserLinks";
 
 const Navbar = () => {
   // selector
@@ -97,9 +98,7 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content p-2 shadow bg-base-200 z-[1] mt-6 rounded-box w-52"
               >
-                <li>
-                  <NavLink to="/profile">Lihat profil</NavLink>
-                </li>
+                <UserLinks />
                 <li>
                   <button
                     onClick={handleLogout}

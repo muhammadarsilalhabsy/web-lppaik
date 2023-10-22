@@ -8,11 +8,11 @@ import { loginUser } from "../features/user/userSlice";
 export const action =
   (store) =>
   async ({ request }) => {
-    console.log(store);
+    // console.log(store);
 
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
-    console.log(data);
+    // console.log(data);
 
     try {
       const response = await customFetch.post("/auth/login", data);

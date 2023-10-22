@@ -8,3 +8,5 @@ export { default as Certificate } from "./Certificate";
 export { default as Profile } from "./Profile";
 export { default as UserManagement } from "./UserManagement";
 export { default as Landing } from "./Landing";
+export { default as MyActivity } from "./MyActivity";
+export { default as ControlBook } from "./ControlBook";
