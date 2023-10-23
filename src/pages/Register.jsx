@@ -15,7 +15,7 @@ const Register = () => {
         <FormInput type="email" label="email" name="email" />
         <FormInput type="password" label="password" name="password" />
         <div className="mt-4">
-          <SubmitButton text="register" />
+          <SubmitButton text="register" size="btn-block" color="btn-primary" />
         </div>
 
         <p className="text-center">

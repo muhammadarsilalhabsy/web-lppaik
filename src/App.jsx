@@ -24,6 +24,7 @@ import { action as loginAction } from "./pages/Login";
 // import { loader as loginLoader } from "./pages/Login";
 import { loader as myActivityLoader } from "./pages/MyActivity";
 import { loader as controlBookLoader } from "./pages/ControlBook";
+import { loader as activityLoader } from "./pages/Activity";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
         path: "activity",
         element: <Activity />,
         errorElement: <ErrorElement />,
+        loader: activityLoader,
       },
       {
         path: "about",

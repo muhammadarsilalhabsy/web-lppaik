@@ -1,5 +1,11 @@
+import { SearchOnly } from "../components";
+
 const Certificate = () => {
-  return <div>Certificate</div>;
+  return (
+    <>
+      <SearchOnly />
+    </>
+  );
 };
 
 export default Certificate;

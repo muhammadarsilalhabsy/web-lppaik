@@ -5,7 +5,7 @@ const User = () => {
 
   const IMG_URL = "http://localhost:8080/api/v1/image/";
   return (
-    <div className="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg h-full">
+    <div className="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg h-full shadow-lg">
       <div className="avatar">
         <div className="w-24 rounded-full">
           <img

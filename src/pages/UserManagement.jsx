@@ -1,5 +1,11 @@
+import Filters from "../components/Filters";
+
 const UserManagement = () => {
-  return <div>UserManagement</div>;
+  return (
+    <>
+      <Filters />
+    </>
+  );
 };
 
 export default UserManagement;

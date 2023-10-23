@@ -48,7 +48,7 @@ const Login = () => {
           defaultValue="secret"
         />
         <div className="mt-4">
-          <SubmitButton text="login" />
+          <SubmitButton text="login" size="btn-block" color="btn-primary" />
         </div>
 
         <p className="text-center">

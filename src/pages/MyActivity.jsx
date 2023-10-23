@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ActivityList, SectionTitle } from "../components";
+import { MyActivityList, SectionTitle } from "../components";
 import { useLoaderData } from "react-router-dom";
 export const loader =
   (store) =>
@@ -34,7 +34,7 @@ const MyActivity = () => {
   return (
     <>
       <SectionTitle text="Kegiatan yang telah diikuti" size="sm:text-lg" />
-      <ActivityList />
+      <MyActivityList />
     </>
   );
 };
