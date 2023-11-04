@@ -1,12 +1,12 @@
 import { Form, Link } from "react-router-dom";
 import FormInput from "./FormInput";
 
-const SearchOnly = () => {
+const SearchOnly = ({ name, link }) => {
   return (
-    <Form className="bg-base-200 grid grid-cols-2 gap-x-4 rounded-md px-8 py-4 items-center shadow-lg">
+    <Form className="bg-base-200 grid sm:grid-cols-2 gap-y-4 sm:gap-x-4 rounded-md px-8 py-4 sm:items-center shadow-lg">
       {/* INPUT SEARCH*/}
       <FormInput
-        name="search"
+        name={name}
         type="search"
         size="input-sm"
         label="search"
@@ -14,12 +14,16 @@ const SearchOnly = () => {
       />
       {/* BUTTONS */}
       <div className="flex mt-auto gap-4">
-        <button type="submit" className="btn-primary btn btn-sm w-1/2">
-          search
-        </button>
-        <Link to="/certificate" className="btn-accent btn btn-sm w-1/2">
-          reset
-        </Link>
+        <div className="w-full">
+          <button type="submit" className="btn-primary btn btn-sm w-full">
+            search
+          </button>
+        </div>
+        <div className="w-full">
+          <Link to={link} className="btn-accent btn btn-sm w-full">
+            reset
+          </Link>
+        </div>
       </div>
     </Form>
   );

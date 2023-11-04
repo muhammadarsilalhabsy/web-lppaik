@@ -3,7 +3,7 @@ import { SearchOnly } from "../components";
 const Certificate = () => {
   return (
     <>
-      <SearchOnly />
+      <SearchOnly name="id" link="/certificate" />
     </>
   );
 };

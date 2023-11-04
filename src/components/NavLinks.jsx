@@ -6,24 +6,38 @@ const links = [
   { id: 2, url: "activity", text: "kegiatan" },
   { id: 3, url: "about", text: "tentang" },
   { id: 4, url: "certificate", text: "sertifikat" },
-  { id: 5, url: "user-management", text: "pengguna" },
+  { id: 5, url: "users", text: "pengguna" },
+  { id: 6, url: "control-book-management", text: "buku kontrol" },
 ];
 
 const NavLinks = () => {
-  const user = useSelector((state) => state.userState.user);
+  const roles = useSelector((state) => state.userState.roles);
+
+  const isAdmin = roles.includes("ADMIN");
+  const isTutor = roles.includes("TUTOR");
+
   return (
     <>
       {links.map((link) => {
         const { id, url, text } = link;
-        if (url === "certificate" && !user) return null;
-        if (url === "user-management" && user?.role !== "ADMIN") return null;
-        return (
-          <li key={id}>
-            <NavLink to={url} className="capitalize">
-              {text}
-            </NavLink>
-          </li>
-        );
+
+        // Tambahkan kondisi untuk selalu menampilkan tautan 1 hingga 4
+        // Juga tambahkan kondisi untuk menampilkan 'control-book-management' jika pengguna adalah "TUTOR" atau "ADMIN"
+        if (
+          id <= 4 ||
+          ((isAdmin || isTutor) && url === "control-book-management") ||
+          (isAdmin && url === "users")
+        ) {
+          return (
+            <li key={id}>
+              <NavLink to={url} className="capitalize">
+                {text}
+              </NavLink>
+            </li>
+          );
+        } else {
+          return null; // Sisanya tidak ditampilkan
+        }
       })}
     </>
   );

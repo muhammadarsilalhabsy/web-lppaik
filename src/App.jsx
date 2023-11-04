@@ -12,6 +12,9 @@ import {
   Profile,
   MyActivity,
   ControlBook,
+  Exp,
+  CreateActivity,
+  UpdateActivity,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -25,6 +28,13 @@ import { action as loginAction } from "./pages/Login";
 import { loader as myActivityLoader } from "./pages/MyActivity";
 import { loader as controlBookLoader } from "./pages/ControlBook";
 import { loader as activityLoader } from "./pages/Activity";
+import { loader as userManagementLoader } from "./pages/UserManagement";
+import SingleActivity, {
+  loader as singleActivityLoader,
+} from "./pages/SingleActivity";
+import SingleUser, { loader as singleUserLoader } from "./pages/SingleUser";
+import { loader as ladingLoader } from "./pages/Landing";
+import { loader as expLoader } from "./pages/Exp";
 
 const router = createBrowserRouter([
   {
@@ -36,12 +46,25 @@ const router = createBrowserRouter([
         index: true,
         element: <Landing />,
         errorElement: <ErrorElement />,
+        loader: ladingLoader,
       },
       {
         path: "activity",
         element: <Activity />,
         errorElement: <ErrorElement />,
         loader: activityLoader,
+      },
+      {
+        path: "activity/:id",
+        element: <SingleActivity />,
+        errorElement: <ErrorElement />,
+        loader: singleActivityLoader,
+      },
+      {
+        path: "users/:id",
+        element: <SingleUser />,
+        errorElement: <ErrorElement />,
+        loader: singleUserLoader,
       },
       {
         path: "about",
@@ -54,9 +77,10 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: "user-management",
+        path: "users",
         element: <UserManagement />,
         errorElement: <ErrorElement />,
+        loader: userManagementLoader(store),
       },
       {
         path: "profile",
@@ -74,6 +98,22 @@ const router = createBrowserRouter([
         element: <ControlBook />,
         errorElement: <ErrorElement />,
         loader: controlBookLoader(store),
+      },
+      {
+        path: "exp",
+        element: <Exp />,
+        errorElement: <ErrorElement />,
+        loader: expLoader,
+      },
+      {
+        path: "create-activity",
+        element: <CreateActivity />,
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: "update-activity/:id",
+        element: <UpdateActivity />,
+        errorElement: <ErrorElement />,
       },
     ],
   },

@@ -6,7 +6,7 @@ const ActivityGrid = () => {
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {activities.map((activity) => {
-        const { title, time, image } = activity;
+        const { title, time, images } = activity;
         return (
           <Link
             key={activity.id}
@@ -15,7 +15,7 @@ const ActivityGrid = () => {
           >
             <figure className="px-4 pt-4">
               <img
-                src={image}
+                src={images[0]}
                 alt={title}
                 className="object-cover h-64 md:h-48 w-full rounded-xl"
               />

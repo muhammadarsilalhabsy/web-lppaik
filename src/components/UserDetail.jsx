@@ -1,19 +1,26 @@
 import { useSelector } from "react-redux";
 import FormInput from "./FormInput";
-import { Form } from "react-router-dom";
-import FormCheckbox from "./FormCheckbox";
+import { Form, Link } from "react-router-dom";
 import FormTextArea from "./FormTextArea";
 import SubmitButton from "./SubmitButton";
+import { MdDisplaySettings } from "react-icons/md";
 
-const UserDetail = () => {
-  const user = useSelector((state) => state.userState.user);
-  const { name, email, jurusan, gender } = user;
+const UserDetail = ({ user, disabled }) => {
+  const { name, email, major, gender, motto, completed, certificate } = user;
+  console.log(gender);
   const genderINA = gender === "MALE" ? "LAKI - LAKI" : "PEREMPUAN";
   return (
     <div className="p-4 bg-base-200 rounded-lg shadow-lg">
-      <div className="flex justify-end ">
-        <SubmitButton text="Update profile" size="btn-sm" color="btn-success" />
-      </div>
+      {!disabled && (
+        <div className="flex justify-end ">
+          <SubmitButton
+            text="Update profile"
+            size="btn-sm"
+            color="btn-success"
+          />
+        </div>
+      )}
+
       <Form method="PATCH" className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <FormInput
@@ -22,6 +29,7 @@ const UserDetail = () => {
             size="input-sm"
             name="name"
             defaultValue={name}
+            disabled={true}
           />
           <FormInput
             label="email"
@@ -29,32 +37,54 @@ const UserDetail = () => {
             size="input-sm"
             name="email"
             defaultValue={email}
+            disabled={disabled}
           />
-          <FormInput
-            label="jenis kelamin"
-            type="text"
-            size="input-sm"
-            name="gender"
-            defaultValue={genderINA}
-            disabled={true}
-          />
+          {gender && (
+            <>
+              <FormInput
+                label="jenis kelamin"
+                type="text"
+                size="input-sm"
+                name="gender"
+                defaultValue={genderINA}
+                disabled={true}
+              />
+            </>
+          )}
           <FormInput
             label="jurusan"
             type="text"
             size="input-sm"
             name="jurusan"
-            defaultValue={jurusan}
+            defaultValue={major}
             disabled={true}
           />
+          {!motto && !gender && (
+            <div>
+              <Link
+                to={`/certificate?id=${certificate}`}
+                className="w-full h-full bg-primary rounded-lg btn"
+                disabled={!completed || !certificate}
+              >
+                {completed ? "Lihat Sertifikat" : "Sertifikat belum ada"}
+              </Link>
+            </div>
+          )}
         </div>
-        <div>
-          <FormTextArea
-            label="motto"
-            size="textarea-md"
-            name="motto"
-            defaultValue="Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi quod magnam amet laborum possimus quasi impedit tenetur ad veniam? Reiciendis?"
-          />
-        </div>
+
+        {motto && (
+          <>
+            <div>
+              <FormTextArea
+                label="motto"
+                size="textarea-md"
+                name="motto"
+                defaultValue={motto}
+                disabled={disabled}
+              />
+            </div>
+          </>
+        )}
       </Form>
     </div>
   );
