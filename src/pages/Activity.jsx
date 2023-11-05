@@ -7,12 +7,13 @@ import { MdOutlineAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { customFetch } from "../utils";
 export const loader = async ({ request }) => {
+  console.log(request);
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
-
+  console.log(params);
   try {
-    const response = await customFetch("/activities", { params });
+    const response = await customFetch("/activities?size=9", { params });
 
     return {
       activities: response.data.data,

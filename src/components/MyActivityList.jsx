@@ -16,22 +16,18 @@ const MyActivityList = () => {
               <th>No.</th>
               <th>Judul kegiatan</th>
               <th>Hari</th>
-              <th>Absen oleh</th>
-              <th>Dibuat</th>
             </tr>
           </thead>
           <tbody>
             {activities.map((activity, index) => {
-              const { title, day, absentBy, createdAt } = activity;
+              const { title, date } = activity;
               const num = index + 1;
               // const date = day(createdAt).format("hh:mm a - MMM Do, YYYY");
               return (
                 <tr key={activity.id}>
                   <td>{num}</td>
                   <td>{title}</td>
-                  <td>{day}</td>
-                  <td>{absentBy}</td>
-                  <td>{createdAt}</td>
+                  <td>{date}</td>
                 </tr>
               );
             })}

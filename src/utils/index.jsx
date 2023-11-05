@@ -24,3 +24,14 @@ export const generateAmountOptions = (number) => {
     );
   });
 };
+
+export function calculateNumber(page, count) {
+  let number = count; // Nilai awal number
+
+  if (page > 1) {
+    // Jika halaman lebih dari 1, tambahkan (page - 1) * 10 ke number
+    number += (page - 1) * 10;
+  }
+
+  return number;
+}

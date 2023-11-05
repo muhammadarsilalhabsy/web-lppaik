@@ -2,6 +2,7 @@ import React from "react";
 import profile from "../assets/haha.jpeg";
 import { Link, useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SectionTitle from "./SectionTitle";
 
 const Users = () => {
   const roles = useSelector((state) => state.userState.roles);
@@ -10,6 +11,10 @@ const Users = () => {
 
   const { users } = useLoaderData();
   const IMG_URL = "http://localhost:8080/api/v1/image/";
+
+  if (users.length < 1) {
+    return <SectionTitle text="Kami tidak menemukan hasil penacarian anda" />;
+  }
 
   return (
     <div className="overflow-x-auto mt-8">

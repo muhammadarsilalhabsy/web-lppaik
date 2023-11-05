@@ -3,11 +3,10 @@ import FormInput from "./FormInput";
 import { Form, Link } from "react-router-dom";
 import FormTextArea from "./FormTextArea";
 import SubmitButton from "./SubmitButton";
-import { MdDisplaySettings } from "react-icons/md";
 
 const UserDetail = ({ user, disabled }) => {
   const { name, email, major, gender, motto, completed, certificate } = user;
-  console.log(gender);
+
   const genderINA = gender === "MALE" ? "LAKI - LAKI" : "PEREMPUAN";
   return (
     <div className="p-4 bg-base-200 rounded-lg shadow-lg">
@@ -22,7 +21,7 @@ const UserDetail = ({ user, disabled }) => {
       )}
 
       <Form method="PATCH" className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           <FormInput
             label="nama"
             type="text"
@@ -72,7 +71,7 @@ const UserDetail = ({ user, disabled }) => {
           )}
         </div>
 
-        {motto && (
+        {(motto || !disabled) && (
           <>
             <div>
               <FormTextArea

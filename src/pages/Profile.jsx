@@ -3,6 +3,7 @@ import { UserDetail, User } from "../components";
 
 const Profile = () => {
   const user = useSelector((state) => state.userState.user);
+
   return (
     <div className="grid gap-4 md:grid-cols-3 items-start">
       <User user={user} hidden={false} />

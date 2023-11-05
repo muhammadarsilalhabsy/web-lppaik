@@ -11,10 +11,12 @@ import {
   UserManagement,
   Profile,
   MyActivity,
-  ControlBook,
+  MyControlBook,
   Exp,
   CreateActivity,
   UpdateActivity,
+  CreateUsers,
+  PrivateRoutes,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -26,7 +28,7 @@ import { action as loginAction } from "./pages/Login";
 // loaders
 // import { loader as loginLoader } from "./pages/Login";
 import { loader as myActivityLoader } from "./pages/MyActivity";
-import { loader as controlBookLoader } from "./pages/ControlBook";
+import { loader as myControlBookLoader } from "./pages/MyControlBook";
 import { loader as activityLoader } from "./pages/Activity";
 import { loader as userManagementLoader } from "./pages/UserManagement";
 import SingleActivity, {
@@ -35,6 +37,11 @@ import SingleActivity, {
 import SingleUser, { loader as singleUserLoader } from "./pages/SingleUser";
 import { loader as ladingLoader } from "./pages/Landing";
 import { loader as expLoader } from "./pages/Exp";
+import { loader as certificateLoader } from "./pages/Certificate";
+import { loader as createUserLoader } from "./pages/CreateUsers";
+
+// action
+import { action as createUserAction } from "./pages/CreateUsers";
 
 const router = createBrowserRouter([
   {
@@ -61,12 +68,6 @@ const router = createBrowserRouter([
         loader: singleActivityLoader,
       },
       {
-        path: "users/:id",
-        element: <SingleUser />,
-        errorElement: <ErrorElement />,
-        loader: singleUserLoader,
-      },
-      {
         path: "about",
         element: <About />,
         errorElement: <ErrorElement />,
@@ -75,45 +76,65 @@ const router = createBrowserRouter([
         path: "certificate",
         element: <Certificate />,
         errorElement: <ErrorElement />,
+        loader: certificateLoader,
       },
       {
-        path: "users",
-        element: <UserManagement />,
-        errorElement: <ErrorElement />,
-        loader: userManagementLoader(store),
+        element: <PrivateRoutes />,
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: "create-activity",
+            element: <CreateActivity />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: "update-activity/:id",
+            element: <UpdateActivity />,
+            errorElement: <ErrorElement />,
+          },
+          {
+            path: "my-activity",
+            element: <MyActivity />,
+            errorElement: <ErrorElement />,
+            loader: myActivityLoader(store),
+          },
+          {
+            path: "my-control-book",
+            element: <MyControlBook />,
+            errorElement: <ErrorElement />,
+            loader: myControlBookLoader(store),
+          },
+          {
+            path: "users",
+            element: <UserManagement />,
+            errorElement: <ErrorElement />,
+            loader: userManagementLoader(store),
+          },
+          {
+            path: "users/create",
+            element: <CreateUsers />,
+            errorElement: <ErrorElement />,
+            loader: createUserLoader,
+            action: createUserAction(store),
+          },
+          {
+            path: "users/:id",
+            element: <SingleUser />,
+            errorElement: <ErrorElement />,
+            loader: singleUserLoader,
+          },
+        ],
       },
-      {
-        path: "profile",
-        element: <Profile />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: "my-activity",
-        element: <MyActivity />,
-        errorElement: <ErrorElement />,
-        loader: myActivityLoader(store),
-      },
-      {
-        path: "control-book",
-        element: <ControlBook />,
-        errorElement: <ErrorElement />,
-        loader: controlBookLoader(store),
-      },
+
       {
         path: "exp",
         element: <Exp />,
         errorElement: <ErrorElement />,
         loader: expLoader,
-      },
-      {
-        path: "create-activity",
-        element: <CreateActivity />,
-        errorElement: <ErrorElement />,
-      },
-      {
-        path: "update-activity/:id",
-        element: <UpdateActivity />,
-        errorElement: <ErrorElement />,
       },
     ],
   },

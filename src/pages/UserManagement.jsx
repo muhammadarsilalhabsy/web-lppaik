@@ -1,5 +1,8 @@
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { Users, Filters, PaginationContainer, SearchOnly } from "../components";
 import { customFetch } from "../utils";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const loader =
   (store) =>
@@ -32,9 +35,21 @@ export const loader =
     }
   };
 const UserManagement = () => {
+  const roles = useSelector((state) => state.userState.roles);
+
+  const isAdmin = roles.includes("ADMIN");
   return (
     <>
       <SearchOnly name="identity" link="/users" />
+      {isAdmin && (
+        <div className="flex justify-center md:justify-end my-8">
+          <Link to="create" className="btn btn-sm btn-primary">
+            <span>Tambahkan pengguna</span>
+            <AiOutlineUsergroupAdd className="font-bold" />
+          </Link>
+        </div>
+      )}
+
       <Users />
       <PaginationContainer />
     </>

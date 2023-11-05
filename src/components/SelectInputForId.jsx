@@ -12,7 +12,7 @@ const SelectInput = ({ label, name, list, defaultValue, size }) => {
       >
         {list.map((item, index) => {
           return (
-            <option key={index} value={item.name}>
+            <option key={index} value={item.id}>
               {item.name}
             </option>
           );

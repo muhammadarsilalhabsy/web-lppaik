@@ -1,7 +1,5 @@
 import { useLoaderData, Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
 import { SectionTitle } from "../components";
 import { customFetch } from "../utils";
 

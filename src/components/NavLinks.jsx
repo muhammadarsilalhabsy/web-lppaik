@@ -15,6 +15,7 @@ const NavLinks = () => {
 
   const isAdmin = roles.includes("ADMIN");
   const isTutor = roles.includes("TUTOR");
+  const isDosen = roles.includes("DOSEN");
 
   return (
     <>
@@ -25,8 +26,9 @@ const NavLinks = () => {
         // Juga tambahkan kondisi untuk menampilkan 'control-book-management' jika pengguna adalah "TUTOR" atau "ADMIN"
         if (
           id <= 4 ||
-          ((isAdmin || isTutor) && url === "control-book-management") ||
-          (isAdmin && url === "users")
+          ((isAdmin || isTutor || isDosen) &&
+            url === "control-book-management") ||
+          ((isAdmin || isDosen) && url === "users")
         ) {
           return (
             <li key={id}>

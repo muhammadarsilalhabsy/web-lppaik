@@ -8,7 +8,12 @@ const Filters = ({ text, link }) => {
   //   const { search, price, company, category, order, shipping } = params;
 
   const search = "";
-  const category = ["All", "Mahasiswa", "Dosen & Tendik", "Umum"];
+  const category = [
+    { id: 1, name: "All" },
+    { id: 2, name: "Mahasiswa" },
+    { id: 3, name: "Dosen & Tendik" },
+    { id: 4, name: "Umum" },
+  ];
 
   return (
     <Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center shadow-lg border">
@@ -33,7 +38,11 @@ const Filters = ({ text, link }) => {
         name="babi"
         label="urutkan"
         size="select-sm"
-        list={["a-z", "z-a", "date"]}
+        list={[
+          { id: 1, name: "a-z" },
+          { id: 2, name: "z-a" },
+          { id: 3, name: "date" },
+        ]}
         defaultValue={"a-z"}
       />
       {/* BUTTONS */}
