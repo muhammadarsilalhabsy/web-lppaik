@@ -1,6 +1,5 @@
 import { useLoaderData, Link, useParams } from "react-router-dom";
-import { useState } from "react";
-import { SectionTitle } from "../components";
+import { SectionTitle, DetailActivity } from "../components";
 import { customFetch } from "../utils";
 
 // loader
@@ -21,7 +20,8 @@ const SingleActivity = () => {
   const { id } = useParams();
   const role = true;
 
-  const { title, time, images, location, description } = activities;
+  const { title, date, images, location, description, startTime, endTime } =
+    activities;
 
   const handelDelete = () => {
     console.log("hapus activity id " + id);
@@ -69,10 +69,12 @@ const SingleActivity = () => {
         <div>
           <SectionTitle text={title} size="text-3xl" />
           {/* <h1 className="text-3xl font-bold capitalize">{title}</h1> */}
-          <h4 className="text-lg text-neutral-content font-bold mt-2">
-            {location}
-          </h4>
-          <p className="mt-3 text-xl">{109}</p>
+          <DetailActivity
+            date={date}
+            startTime={startTime}
+            endTime={endTime}
+            location={location}
+          />
           <p className="mt-6 leading-8">{description}</p>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useLoaderData, Link } from "react-router-dom";
+import { getFormatDate } from "../utils";
 
 const ActivityList = () => {
   const { activities } = useLoaderData();
@@ -6,7 +7,7 @@ const ActivityList = () => {
   return (
     <div className="pt-12 grid gap-y-8">
       {activities.map((activity) => {
-        const { title, location, images, time } = activity;
+        const { title, location, images, date } = activity;
 
         return (
           <Link
@@ -27,7 +28,9 @@ const ActivityList = () => {
               </h4>
             </div>
 
-            <p className="font-medium text-lg ml-0 sm:ml-auto">{time}</p>
+            <p className="font-medium text-lg ml-0 sm:ml-auto">
+              {getFormatDate(date)}
+            </p>
           </Link>
         );
       })}

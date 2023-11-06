@@ -77,7 +77,7 @@ const Users = () => {
                     )}
                   </td>
                   <th>
-                    <div className="flex justify-evenly">
+                    <div className="flex justify-evenly gap-2">
                       <Link
                         to={`/users/${username}`}
                         className="btn btn-ghost btn-sm"

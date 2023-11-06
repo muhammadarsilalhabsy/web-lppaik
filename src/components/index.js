@@ -16,3 +16,4 @@ export { default as SearchOnly } from "./SearchOnly";
 export { default as MyActivityList } from "./MyActivityList";
 export { default as PaginationContainer } from "./PaginationContainer";
 export { default as Avatar } from "./Avatar";
+export { default as DetailActivity } from "./DetailActivity";

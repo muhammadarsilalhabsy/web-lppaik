@@ -1,29 +1,13 @@
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+dayjs.locale("id");
 
 const prodURL = "http://localhost:8080/api/v1";
 
 export const customFetch = axios.create({
   baseURL: prodURL,
 });
-
-export const formatPriceUSD = (price) => {
-  const dollar = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format((price / 100).toFixed(2));
-  return dollar;
-};
-
-export const generateAmountOptions = (number) => {
-  return Array.from({ length: number }, (_, index) => {
-    const amount = index + 1;
-    return (
-      <option key={amount} value={amount}>
-        {amount}
-      </option>
-    );
-  });
-};
 
 export function calculateNumber(page, count) {
   let number = count; // Nilai awal number
@@ -34,4 +18,20 @@ export function calculateNumber(page, count) {
   }
 
   return number;
+}
+
+export function getFormatDateDayAMonth(date) {
+  return dayjs(date).format("dddd");
+}
+export function getFormatDateWithoutDay(date) {
+  return dayjs(date).format("D MMMM YYYY");
+}
+export function getFormatDate(date) {
+  return dayjs(date).format("dddd, D MMMM YYYY");
+}
+
+export function getTimeWITA(time) {
+  const zonaWaktu = "WITA";
+
+  return `${time} ${zonaWaktu}`;
 }

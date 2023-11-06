@@ -1,4 +1,5 @@
 import { useLoaderData, Link } from "react-router-dom";
+import { getFormatDate } from "../utils";
 
 const ActivityGrid = () => {
   const { activities } = useLoaderData();
@@ -6,7 +7,7 @@ const ActivityGrid = () => {
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {activities.map((activity) => {
-        const { title, time, images } = activity;
+        const { title, date, images } = activity;
         return (
           <Link
             key={activity.id}
@@ -22,7 +23,8 @@ const ActivityGrid = () => {
             </figure>
             <div className="card-body text-center items-center ">
               <h2 className="card-title capitalize tracking-wider">{title}</h2>
-              <span className="text-secondary">{time}</span>
+
+              <span className="text-secondary">{getFormatDate(date)}</span>
             </div>
           </Link>
         );

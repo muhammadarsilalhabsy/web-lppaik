@@ -42,7 +42,7 @@ const UserManagement = () => {
     <>
       <SearchOnly name="identity" link="/users" />
       {isAdmin && (
-        <div className="flex justify-center md:justify-end my-8">
+        <div className="flex justify-center md:justify-end md:mr-8 my-8">
           <Link to="create" className="btn btn-sm btn-primary">
             <span>Tambahkan pengguna</span>
             <AiOutlineUsergroupAdd className="font-bold" />

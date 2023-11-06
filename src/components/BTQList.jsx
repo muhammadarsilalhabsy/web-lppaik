@@ -1,5 +1,10 @@
 import { useLoaderData } from "react-router-dom";
-import { calculateNumber } from "../utils";
+import {
+  calculateNumber,
+  getFormatDate,
+  getFormatDateDayAMonth,
+  getFormatDateWithoutDay,
+} from "../utils";
 
 const BTQList = () => {
   const { control, pagination } = useLoaderData();
@@ -17,8 +22,8 @@ const BTQList = () => {
               <th>No.</th>
               <th>Pelajaran</th>
               <th>Keterangan</th>
-              <th>Hari</th>
-              <th>Tutor</th>
+              <th className="text-center">Hari</th>
+              <th className="text-center">Tutor</th>
             </tr>
           </thead>
           <tbody>
@@ -31,8 +36,14 @@ const BTQList = () => {
                   <td>{calculateNumber(pagination.page, num)}</td>
                   <td>{lesson}</td>
                   <td>{description}</td>
-                  <td>{date}</td>
-                  <td>{tutor}</td>
+                  <td className="text-center">
+                    {getFormatDateDayAMonth(date)}
+                    <br />
+                    <span class="badge badge-ghost badge-sm">
+                      {getFormatDateWithoutDay(date)}
+                    </span>
+                  </td>
+                  <td className="text-center">{tutor}</td>
                 </tr>
               );
             })}

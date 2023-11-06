@@ -1,7 +1,12 @@
 import { useLoaderData } from "react-router-dom";
+import {
+  calculateNumber,
+  getFormatDateDayAMonth,
+  getFormatDateWithoutDay,
+} from "../utils";
 
 const MyActivityList = () => {
-  const { activities } = useLoaderData();
+  const { activities, pagination } = useLoaderData();
 
   return (
     <div className="mt-8">
@@ -15,19 +20,25 @@ const MyActivityList = () => {
             <tr>
               <th>No.</th>
               <th>Judul kegiatan</th>
-              <th>Hari</th>
+              <th className="text-center">Hari</th>
             </tr>
           </thead>
           <tbody>
             {activities.map((activity, index) => {
               const { title, date } = activity;
               const num = index + 1;
-              // const date = day(createdAt).format("hh:mm a - MMM Do, YYYY");
+
               return (
                 <tr key={activity.id}>
-                  <td>{num}</td>
+                  <td>{calculateNumber(pagination.page, num)}</td>
                   <td>{title}</td>
-                  <td>{date}</td>
+                  <td className="text-center">
+                    {getFormatDateDayAMonth(date)}
+                    <br />
+                    <span class="badge badge-ghost badge-sm">
+                      {getFormatDateWithoutDay(date)}
+                    </span>
+                  </td>
                 </tr>
               );
             })}
