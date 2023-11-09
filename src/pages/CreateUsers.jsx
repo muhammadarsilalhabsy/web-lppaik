@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import CreateSingleUser from "../components/CreateSingleUser";
 import { customFetch } from "../utils";
-import { redirect } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { removeUser } from "../features/user/userSlice";
 
 export const loader = async () => {
@@ -35,10 +35,11 @@ export const action =
       toast.success(response?.data?.message || "Success");
       return redirect("/users");
     } catch (error) {
-      console.log(error);
+      const msg = error.response.data.message;
 
-      toast.error("Something error with your input");
-      if (error.response.status === 401 || 403) {
+      toast.error(msg || "Something error with your input");
+      console.log(error.response.status);
+      if (error.response.status === 401) {
         store.dispatch(removeUser());
         return redirect("/login");
       }
@@ -48,6 +49,16 @@ export const action =
 const CreateUsers = () => {
   return (
     <div>
+      <div className="text-sm breadcrumbs mb-6">
+        <ul>
+          <li>
+            <Link to="/">Beranda</Link>
+          </li>
+          <li>
+            <Link to="/users">Pengguna</Link>
+          </li>
+        </ul>
+      </div>
       <CreateSingleUser />
     </div>
   );

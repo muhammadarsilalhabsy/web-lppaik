@@ -58,31 +58,27 @@ const UserDetail = ({ user, disabled }) => {
             defaultValue={major}
             disabled={true}
           />
-          {!motto && !gender && (
-            <div>
-              <Link
-                to={`/certificate?id=${certificate}`}
-                className="w-full h-full bg-primary rounded-lg btn"
-                disabled={!completed || !certificate}
-              >
-                {completed ? "Lihat Sertifikat" : "Sertifikat belum ada"}
-              </Link>
-            </div>
-          )}
         </div>
 
-        {(motto || !disabled) && (
-          <>
-            <div>
-              <FormTextArea
-                label="motto"
-                size="textarea-md"
-                name="motto"
-                defaultValue={motto}
-                disabled={disabled}
-              />
-            </div>
-          </>
+        <div>
+          <FormTextArea
+            label="motto"
+            size="textarea-md"
+            name="motto"
+            defaultValue={motto}
+            disabled={disabled}
+          />
+        </div>
+        {disabled && (
+          <div className="sm:col-span-2">
+            <Link
+              to={`/certificate?id=${certificate}`}
+              className="w-full h-full bg-primary rounded-lg btn"
+              disabled={!completed || !certificate}
+            >
+              {completed ? "Lihat Sertifikat" : "Sertifikat belum ada"}
+            </Link>
+          </div>
         )}
       </Form>
     </div>

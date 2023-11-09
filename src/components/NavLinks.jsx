@@ -7,7 +7,7 @@ const links = [
   { id: 3, url: "about", text: "tentang" },
   { id: 4, url: "certificate", text: "sertifikat" },
   { id: 5, url: "users", text: "pengguna" },
-  { id: 6, url: "control-book-management", text: "buku kontrol" },
+  { id: 6, url: "control-books", text: "buku kontrol" },
 ];
 
 const NavLinks = () => {
@@ -23,11 +23,10 @@ const NavLinks = () => {
         const { id, url, text } = link;
 
         // Tambahkan kondisi untuk selalu menampilkan tautan 1 hingga 4
-        // Juga tambahkan kondisi untuk menampilkan 'control-book-management' jika pengguna adalah "TUTOR" atau "ADMIN"
+        // Juga tambahkan kondisi untuk menampilkan 'control-books' jika pengguna adalah "TUTOR" atau "ADMIN"
         if (
           id <= 4 ||
-          ((isAdmin || isTutor || isDosen) &&
-            url === "control-book-management") ||
+          ((isAdmin || isTutor || isDosen) && url === "control-books") ||
           ((isAdmin || isDosen) && url === "users")
         ) {
           return (

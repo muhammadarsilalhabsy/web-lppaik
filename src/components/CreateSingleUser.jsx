@@ -3,6 +3,7 @@ import FormInput from "./FormInput";
 import SelectInput from "./SelectInput";
 import SelectInputForId from "./SelectInputForId";
 import { Form, useLoaderData } from "react-router-dom";
+import SubmitButton from "./SubmitButton";
 
 const CreateSingleUser = () => {
   const { majors } = useLoaderData();
@@ -46,10 +47,7 @@ const CreateSingleUser = () => {
         <FormCheckbox name="TUTOR" label="TUTOR" size="checkbox-sm" />
         <FormCheckbox name="ADMIN" label="ADMIN" size="checkbox-sm" />
       </div>
-
-      <button type="submit" className="btn btn-primary btn-sm">
-        Submit
-      </button>
+      <SubmitButton text="Tambahkan" size="btn-sm" color="btn-primary" />
     </Form>
   );
 };

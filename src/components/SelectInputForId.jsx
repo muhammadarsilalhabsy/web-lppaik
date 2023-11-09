@@ -1,4 +1,4 @@
-const SelectInput = ({ label, name, list, defaultValue, size }) => {
+const SelectInputForId = ({ label, name, list, defaultValue, size }) => {
   return (
     <div className="form-control">
       <label htmlFor={name} className="label">
@@ -22,4 +22,4 @@ const SelectInput = ({ label, name, list, defaultValue, size }) => {
   );
 };
 
-export default SelectInput;
+export default SelectInputForId;

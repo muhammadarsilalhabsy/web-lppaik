@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import profile from "../assets/haha.jpeg";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SectionTitle from "./SectionTitle";
+import { customFetch } from "../utils";
+import { toast } from "react-toastify";
 
 const Users = () => {
-  const roles = useSelector((state) => state.userState.roles);
-
+  const { roles, user } = useSelector((state) => state.userState);
   const isAdmin = roles.includes("ADMIN");
-
-  const { users } = useLoaderData();
+  const { users: initialUsers } = useLoaderData();
   const IMG_URL = "http://localhost:8080/api/v1/image/";
+  const [users, setUsers] = useState(initialUsers);
 
   if (users.length < 1) {
     return <SectionTitle text="Kami tidak menemukan hasil penacarian anda" />;
+  }
+
+  async function handleDelete(username) {
+    try {
+      const response = await customFetch.delete(`/users/${username}`, {
+        headers: {
+          "X-API-TOKEN": `${user.token}`,
+        },
+      });
+      const msg = response.data.message;
+      toast.success(msg || "Success delete");
+
+      setUsers(users.filter((user) => user.username !== username));
+      console.log(response);
+    } catch (error) {
+      const msg = error.response.data.message;
+      toast.error(msg || "Something error with the operation");
+      console.log(error);
+    }
   }
 
   return (
@@ -86,8 +106,17 @@ const Users = () => {
                       </Link>
                       {isAdmin && (
                         <>
-                          <button className="btn btn-info btn-sm">edit</button>
-                          <button className="btn btn-error btn-sm">
+                          <Link
+                            to={`edit/${username}`}
+                            className="btn btn-info btn-sm"
+                          >
+                            edit
+                          </Link>
+
+                          <button
+                            onClick={() => handleDelete(username)}
+                            className="btn btn-error btn-sm"
+                          >
                             hapus
                           </button>
                         </>

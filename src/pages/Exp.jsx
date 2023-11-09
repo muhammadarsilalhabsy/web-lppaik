@@ -1,42 +1,52 @@
-import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
-export const loader = async () => {
-  const api1 = async () => {
-    try {
-      const response = await axios(
-        "https://6351779adfe45bbd55c0ffd1.mockapi.io/activitsy"
-      );
-      console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error, "ERROR 2 bro");
-    }
-  };
-  const api2 = async () => {
-    try {
-      const response = await axios(
-        "https://6351779adfe45bbd55c0ffd1.mockapi.io/btq"
-      );
-      console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error, "ERROR 1 bro");
-    }
-  };
-  try {
-    const response = await Promise.all([api1(), api2()]);
+function MajorSelection({ majors, user }) {
+  const [selectedMajor, setSelectedMajor] = useState(user.major);
 
-    console.log(response[0]);
-    console.log(response[1]);
-    return null;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+  const handleMajorChange = (event) => {
+    setSelectedMajor(event.target.value);
+  };
+
+  clg;
+  return (
+    <div>
+      <label htmlFor="majorSelect">Pilih Jurusan:</label>
+      <select
+        id="majorSelect"
+        value={selectedMajor}
+        onChange={handleMajorChange}
+      >
+        {majors.map((major) => (
+          <option key={major.id} value={major.name}>
+            {major.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 const Exp = () => {
-  return <div>Exp</div>;
+  // Data array majors
+  const majors = [
+    { id: "randomId1", name: "major name1" },
+    { id: "randomId2", name: "major name2" },
+    { id: "randomId3", name: "major name3" },
+  ];
+
+  // Data user
+  const user = {
+    username: "simple username",
+    major: "major name2", // Ini adalah nilai default
+    gender: "MALE",
+  };
+
+  return (
+    <div>
+      <h1>Form Pilihan Jurusan</h1>
+      <MajorSelection majors={majors} user={user} />
+    </div>
+  );
 };
 
 export default Exp;

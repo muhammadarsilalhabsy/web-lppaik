@@ -17,6 +17,8 @@ import {
   UpdateActivity,
   CreateUsers,
   PrivateRoutes,
+  ControlBook,
+  EditUser,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -36,12 +38,13 @@ import SingleActivity, {
 } from "./pages/SingleActivity";
 import SingleUser, { loader as singleUserLoader } from "./pages/SingleUser";
 import { loader as ladingLoader } from "./pages/Landing";
-import { loader as expLoader } from "./pages/Exp";
 import { loader as certificateLoader } from "./pages/Certificate";
 import { loader as createUserLoader } from "./pages/CreateUsers";
+import { loader as editUserLoader } from "./pages/EditUser";
 
 // action
 import { action as createUserAction } from "./pages/CreateUsers";
+import { action as editUserAction } from "./pages/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +112,11 @@ const router = createBrowserRouter([
             loader: myControlBookLoader(store),
           },
           {
+            path: "control-books",
+            element: <ControlBook />,
+            errorElement: <ErrorElement />,
+          },
+          {
             path: "users",
             element: <UserManagement />,
             errorElement: <ErrorElement />,
@@ -120,6 +128,13 @@ const router = createBrowserRouter([
             errorElement: <ErrorElement />,
             loader: createUserLoader,
             action: createUserAction(store),
+          },
+          {
+            path: "users/edit/:id",
+            element: <EditUser />,
+            errorElement: <ErrorElement />,
+            loader: editUserLoader,
+            action: editUserAction(store),
           },
           {
             path: "users/:id",
@@ -134,7 +149,6 @@ const router = createBrowserRouter([
         path: "exp",
         element: <Exp />,
         errorElement: <ErrorElement />,
-        loader: expLoader,
       },
     ],
   },
