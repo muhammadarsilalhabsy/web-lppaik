@@ -11,7 +11,6 @@ export { default as UserManagement } from "./UserManagement";
 export { default as Landing } from "./Landing";
 export { default as MyActivity } from "./MyActivity";
 export { default as MyControlBook } from "./MyControlBook";
-export { default as ControlBook } from "./ControlBook";
 export { default as EditUser } from "./EditUser";
 export { default as Exp } from "./Exp";
 export { default as UpdateActivity } from "./UpdateActivity";

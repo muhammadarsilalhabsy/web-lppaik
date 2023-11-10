@@ -17,7 +17,6 @@ import {
   UpdateActivity,
   CreateUsers,
   PrivateRoutes,
-  ControlBook,
   EditUser,
 } from "./pages";
 
@@ -45,6 +44,7 @@ import { loader as editUserLoader } from "./pages/EditUser";
 // action
 import { action as createUserAction } from "./pages/CreateUsers";
 import { action as editUserAction } from "./pages/EditUser";
+import { action as singleUserAction } from "./pages/SingleUser";
 
 const router = createBrowserRouter([
   {
@@ -111,11 +111,7 @@ const router = createBrowserRouter([
             errorElement: <ErrorElement />,
             loader: myControlBookLoader(store),
           },
-          {
-            path: "control-books",
-            element: <ControlBook />,
-            errorElement: <ErrorElement />,
-          },
+
           {
             path: "users",
             element: <UserManagement />,
@@ -140,7 +136,8 @@ const router = createBrowserRouter([
             path: "users/:id",
             element: <SingleUser />,
             errorElement: <ErrorElement />,
-            loader: singleUserLoader,
+            loader: singleUserLoader(store),
+            action: singleUserAction(store),
           },
         ],
       },

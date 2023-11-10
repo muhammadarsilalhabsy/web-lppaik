@@ -1,6 +1,8 @@
-import { useLoaderData, Link, useParams } from "react-router-dom";
+import { useLoaderData, Link, useParams, useNavigate } from "react-router-dom";
 import { SectionTitle, DetailActivity } from "../components";
 import { customFetch } from "../utils";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 // loader
 export const loader = async ({ params }) => {
@@ -16,15 +18,33 @@ export const loader = async ({ params }) => {
 
 // component
 const SingleActivity = () => {
+  const { user, roles } = useSelector((state) => state.userState);
+
+  const isAdmin = roles.includes("ADMIN");
   const { activities } = useLoaderData();
   const { id } = useParams();
-  const role = true;
+
+  const navigate = useNavigate();
 
   const { title, date, images, location, description, startTime, endTime } =
     activities;
 
-  const handelDelete = () => {
-    console.log("hapus activity id " + id);
+  const handelDelete = async () => {
+    try {
+      const response = await customFetch.delete(`/activities/${id}`, {
+        headers: {
+          "X-API-TOKEN": `${user.token}`,
+        },
+      });
+      const msg = response.data.message;
+      toast.success(msg || "Success delete");
+      navigate("/activity");
+    } catch (error) {
+      console.log(error);
+      const msg = null;
+      toast.error(msg || "Something error with the operation");
+      console.log(error);
+    }
   };
   return (
     <section>
@@ -39,7 +59,7 @@ const SingleActivity = () => {
             </li>
           </ul>
         </div>
-        {role && (
+        {isAdmin && (
           <div className="flex gap-4">
             <Link
               to={`/update-activity/${id}`}
@@ -57,7 +77,6 @@ const SingleActivity = () => {
         )}
       </div>
 
-      {/* PRODUCT */}
       <div className="mt-6 grid gap-y-8 lg:gap-x-16 lg:grid-cols-2">
         {/* IMG */}
         <img
@@ -67,7 +86,9 @@ const SingleActivity = () => {
         />
         {/* DEtail */}
         <div>
-          <SectionTitle text={title} size="text-3xl" />
+          <h2 className="text-2xl lg:text-3xl text-center lg:text-left font-bold mb-6">
+            {title}
+          </h2>
           {/* <h1 className="text-3xl font-bold capitalize">{title}</h1> */}
           <DetailActivity
             date={date}
@@ -75,7 +96,9 @@ const SingleActivity = () => {
             endTime={endTime}
             location={location}
           />
-          <p className="mt-6 leading-8">{description}</p>
+          <p className="mt-6 leading-8 lg:h-40 lg:overflow-auto">
+            {description}
+          </p>
         </div>
       </div>
     </section>

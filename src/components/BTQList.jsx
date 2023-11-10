@@ -39,7 +39,7 @@ const BTQList = () => {
                   <td className="text-center">
                     {getFormatDateDayAMonth(date)}
                     <br />
-                    <span class="badge badge-ghost badge-sm">
+                    <span className="badge badge-ghost badge-sm">
                       {getFormatDateWithoutDay(date)}
                     </span>
                   </td>
