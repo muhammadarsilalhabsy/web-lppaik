@@ -18,3 +18,4 @@ export { default as CreateActivity } from "./CreateActivity";
 export { default as CreateUsers } from "./CreateUsers";
 export { default as SingleUser } from "./SingleUser";
 export { default as PrivateRoutes } from "./PrivateRoutes";
+export { default as EditControlBook } from "./EditControlBook";

@@ -6,7 +6,7 @@ import {
 } from "../utils";
 
 const MyActivityList = () => {
-  const { activities, pagination } = useLoaderData();
+  const { activities, paging } = useLoaderData();
 
   return (
     <div className="mt-8">
@@ -30,7 +30,7 @@ const MyActivityList = () => {
 
               return (
                 <tr key={activity.id}>
-                  <td>{calculateNumber(pagination.page, num)}</td>
+                  <td>{calculateNumber(paging.page, num)}</td>
                   <td>{title}</td>
                   <td className="text-center">
                     {getFormatDateDayAMonth(date)}

@@ -8,7 +8,7 @@ const FormTextArea = ({ label, name, defaultValue, size, disabled }) => {
         name={name}
         disabled={disabled}
         className={`textarea textarea-bordered w-full h-24 ${size}`}
-        placeholder="Bio"
+        placeholder="..."
         defaultValue={defaultValue}
       ></textarea>
     </div>

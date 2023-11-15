@@ -15,6 +15,7 @@ export { default as Filters } from "./Filters";
 export { default as SearchOnly } from "./SearchOnly";
 export { default as MyActivityList } from "./MyActivityList";
 export { default as PaginationContainer } from "./PaginationContainer";
+export { default as PagingContainer } from "./PagingContainer";
 export { default as Avatar } from "./Avatar";
 export { default as DetailActivity } from "./DetailActivity";
 export { default as EditSingleUser } from "./EditSingleUser";

@@ -1,16 +1,23 @@
-import React from "react";
-import { redirect, useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import {
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { customFetch } from "../utils";
 import {
   FormControlBook,
+  MyActivityList,
   PaginationContainer,
+  PagingContainer,
   User,
   UserDetail,
 } from "../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BTQList from "../components/BTQList";
 import { toast } from "react-toastify";
-import { removeUser } from "../features/user/userSlice";
+import { removeUser, setShow } from "../features/user/userSlice";
 
 export const action =
   (store) =>
@@ -57,9 +64,15 @@ export const loader =
     ]);
 
     try {
-      const [response1, response2] = await Promise.all([
+      const [response1, response2, response3] = await Promise.all([
         customFetch(`/users/${params.id}`),
         customFetch(`/users/control-book/${params.id}`, {
+          params: reqParams,
+          headers: {
+            "X-API-TOKEN": `${user.token}`,
+          },
+        }),
+        customFetch(`/users/activities/${params.id}`, {
           params: reqParams,
           headers: {
             "X-API-TOKEN": `${user.token}`,
@@ -71,6 +84,8 @@ export const loader =
         user: response1.data.data,
         control: response2.data.data,
         pagination: response2.data.pagination,
+        activities: response3.data.data,
+        paging: response3.data.pagination,
       };
     } catch (error) {
       console.log(error);
@@ -82,14 +97,25 @@ export const loader =
 
 // components
 const SingleUser = () => {
-  const roles = useSelector((state) => state.userState.roles);
-
+  const { roles, show } = useSelector((state) => state.userState);
+  const params = useParams();
+  const navigate = useNavigate();
   const isAdmin = roles.includes("ADMIN");
   const isTutor = roles.includes("TUTOR");
   const isDosen = roles.includes("DOSEN");
 
   const { user } = useLoaderData();
 
+  const dispatch = useDispatch();
+
+  function handleBtq() {
+    dispatch(setShow("btq"));
+    navigate(`/users/${params.id}`);
+  }
+  function handleActivities() {
+    dispatch(setShow("kegiatan"));
+    navigate(`/users/${params.id}`);
+  }
   return (
     <>
       <div className="grid gap-4 md:grid-cols-3 items-start">
@@ -98,11 +124,37 @@ const SingleUser = () => {
           <UserDetail user={user} disabled={true} />
         </div>
       </div>
-      {(isAdmin || isTutor) && <FormControlBook />}
+      {(isAdmin || isTutor) && (
+        <FormControlBook
+          date={new Date().toISOString().split("T")[0]}
+          btn="Tambahkan control book"
+          method="POST"
+        />
+      )}
       {(isAdmin || isTutor || isDosen) && (
         <>
-          <BTQList />
-          <PaginationContainer />
+          <div className="flex items-center justify-center gap-4 mb-4 mt-8">
+            <button className="btn btn-primary btn-sm" onClick={handleBtq}>
+              BTQ
+            </button>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={handleActivities}
+            >
+              Kegiatan
+            </button>
+          </div>
+          {show === "btq" ? (
+            <>
+              <BTQList />
+              <PaginationContainer />
+            </>
+          ) : (
+            <>
+              <MyActivityList />
+              <PagingContainer />
+            </>
+          )}
         </>
       )}
     </>

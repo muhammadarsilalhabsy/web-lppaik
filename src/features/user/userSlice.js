@@ -17,11 +17,14 @@ const getThemeFromLocalStorage = () => {
   document.documentElement.setAttribute("data-theme", theme);
   return theme;
 };
-
+const getShowFromLocalStorage = () => {
+  return localStorage.getItem("show") || "btq";
+};
 const initialState = {
   user: getUserFromLocalStorage(),
   roles: getUserRolesFromLocalStore(),
   theme: getThemeFromLocalStorage(),
+  show: getShowFromLocalStorage(),
 };
 
 const userSlice = createSlice({
@@ -59,9 +62,13 @@ const userSlice = createSlice({
       localStorage.removeItem("roles");
       localStorage.removeItem("user");
     },
+    setShow: (state, action) => {
+      state.show = action.payload;
+      localStorage.setItem("show", action.payload);
+    },
   },
 });
 
-export const { loginUser, logoutUser, toggleTheme, removeUser } =
+export const { loginUser, logoutUser, toggleTheme, removeUser, setShow } =
   userSlice.actions;
 export default userSlice.reducer;

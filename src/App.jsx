@@ -18,6 +18,9 @@ import {
   CreateUsers,
   PrivateRoutes,
   EditUser,
+  EditControlBook,
+  SingleActivity,
+  SingleUser,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -32,19 +35,19 @@ import { loader as myActivityLoader } from "./pages/MyActivity";
 import { loader as myControlBookLoader } from "./pages/MyControlBook";
 import { loader as activityLoader } from "./pages/Activity";
 import { loader as userManagementLoader } from "./pages/UserManagement";
-import SingleActivity, {
-  loader as singleActivityLoader,
-} from "./pages/SingleActivity";
-import SingleUser, { loader as singleUserLoader } from "./pages/SingleUser";
+import { loader as singleActivityLoader } from "./pages/SingleActivity";
+import { loader as singleUserLoader } from "./pages/SingleUser";
 import { loader as ladingLoader } from "./pages/Landing";
 import { loader as certificateLoader } from "./pages/Certificate";
 import { loader as createUserLoader } from "./pages/CreateUsers";
 import { loader as editUserLoader } from "./pages/EditUser";
+import { loader as editControlBookLoader } from "./pages/EditControlBook";
 
 // action
 import { action as createUserAction } from "./pages/CreateUsers";
 import { action as editUserAction } from "./pages/EditUser";
 import { action as singleUserAction } from "./pages/SingleUser";
+import { action as editControlBookAction } from "./pages/EditControlBook";
 
 const router = createBrowserRouter([
   {
@@ -138,6 +141,13 @@ const router = createBrowserRouter([
             errorElement: <ErrorElement />,
             loader: singleUserLoader(store),
             action: singleUserAction(store),
+          },
+          {
+            path: "control-book/:id",
+            element: <EditControlBook />,
+            errorElement: <ErrorElement />,
+            loader: editControlBookLoader,
+            action: editControlBookAction(store),
           },
         ],
       },

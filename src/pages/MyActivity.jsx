@@ -1,8 +1,4 @@
-import {
-  MyActivityList,
-  PaginationContainer,
-  SectionTitle,
-} from "../components";
+import { MyActivityList, PagingContainer, SectionTitle } from "../components";
 import { useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
@@ -29,7 +25,7 @@ export const loader =
       console.log(response);
       return {
         activities: response.data.data,
-        pagination: response.data.pagination,
+        paging: response.data.pagination,
       };
     } catch (error) {
       console.log(error);
@@ -37,8 +33,8 @@ export const loader =
     }
   };
 const MyActivity = () => {
-  const { activities, pagination } = useLoaderData();
-  console.log(pagination);
+  const { activities } = useLoaderData();
+
   if (activities.length < 1) {
     return <SectionTitle text="Belum mengikuti kegiatan satupun!" />;
   }
@@ -46,7 +42,7 @@ const MyActivity = () => {
     <>
       <SectionTitle text="Kegiatan yang telah diikuti" size="sm:text-lg" />
       <MyActivityList />
-      <PaginationContainer />
+      <PagingContainer />
     </>
   );
 };

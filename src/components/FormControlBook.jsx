@@ -4,10 +4,10 @@ import FormTextArea from "./FormTextArea";
 import DateInput from "./DateInput";
 import SubmitButton from "./SubmitButton";
 
-const FormControlBook = () => {
+const FormControlBook = ({ lesson, date, description, method, btn }) => {
   return (
     <Form
-      method="POST"
+      method={method}
       className="bg-base-200 grid gap-y-4 rounded-md px-8 py-4 shadow-lg my-4"
     >
       <FormInput
@@ -15,15 +15,16 @@ const FormControlBook = () => {
         type="text"
         size="input-sm"
         label="pelajaran"
-        defaultValue=""
+        defaultValue={lesson}
       />
-      <DateInput name="date" label="tanggal" />
-      <FormTextArea label="keterangan" name="description" size="textarea-sm" />
-      <SubmitButton
-        color="btn-primary"
-        text="Tambahkan control book"
-        size="btn-sm"
+      <DateInput name="date" label="tanggal" defaultValue={date} />
+      <FormTextArea
+        label="keterangan"
+        name="description"
+        size="textarea-sm"
+        defaultValue={description}
       />
+      <SubmitButton color="btn-primary" text={btn} size="btn-sm" />
     </Form>
   );
 };
