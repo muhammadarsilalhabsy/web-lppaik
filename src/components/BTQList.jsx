@@ -1,18 +1,41 @@
 import { Link, useLoaderData } from "react-router-dom";
 import {
   calculateNumber,
+  customFetch,
   getFormatDate,
   getFormatDateDayAMonth,
   getFormatDateWithoutDay,
 } from "../utils";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const BTQList = () => {
-  const { control, pagination } = useLoaderData();
-  const roles = useSelector((state) => state.userState.roles);
+  const { control: initialControl, pagination } = useLoaderData();
+  const { roles, user } = useSelector((state) => state.userState);
+  const [control, setControl] = useState(initialControl);
 
   const isAdmin = roles.includes("ADMIN");
   const isTutor = roles.includes("TUTOR");
+
+  async function handleDelete(id) {
+    try {
+      const response = await customFetch.delete(`/control-book/${id}`, {
+        headers: {
+          "X-API-TOKEN": `${user.token}`,
+        },
+      });
+      const msg = response.data.message;
+      toast.success(msg || "Success delete");
+
+      setControl(control.filter((con) => con.id !== id));
+      console.log(response);
+    } catch (error) {
+      const msg = error.response.data.message;
+      toast.error(msg || "Something error with the operation");
+      console.log(error);
+    }
+  }
 
   return (
     <div className="mt-8">
@@ -59,7 +82,12 @@ const BTQList = () => {
                         edit
                       </Link>
 
-                      <button className="btn btn-error btn-sm">hapus</button>
+                      <button
+                        onClick={() => handleDelete(id)}
+                        className="btn btn-error btn-sm"
+                      >
+                        hapus
+                      </button>
                     </td>
                   )}
                 </tr>

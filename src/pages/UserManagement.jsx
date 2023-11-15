@@ -1,5 +1,5 @@
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { Users, Filters, PaginationContainer, SearchOnly } from "../components";
+import { Users, PaginationContainer, SearchOnly } from "../components";
 import { customFetch } from "../utils";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
