@@ -1,27 +1,50 @@
 import { useLoaderData, Link, useParams, useNavigate } from "react-router-dom";
-import { SectionTitle, DetailActivity } from "../components";
+import { DetailActivity, AttendanceList } from "../components";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 // loader
-export const loader = async ({ params }) => {
-  try {
-    const response = await customFetch(`/activities/${params.id}`);
+export const loader =
+  (store) =>
+  async ({ params }) => {
+    const user = store.getState().userState.user;
+    try {
+      if (user) {
+        const responses = await Promise.allSettled([
+          customFetch(`/activities/${params.id}`),
+          customFetch(`/activities/${params.id}/attendance`, {
+            headers: {
+              "X-API-TOKEN": `${user.token}`,
+            },
+          }),
+        ]);
 
-    return { activities: response.data.data };
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+        const successfulResponses = responses
+          .filter((result) => result.status === "fulfilled")
+          .map((result) => result.value.data.data);
+
+        const activities = successfulResponses[0]; // First response
+        const users = successfulResponses[1]; // Second response
+
+        return { activities, users };
+      } else {
+        const response = await customFetch(`/activities/${params.id}`);
+
+        return { activities: response.data.data, users: undefined };
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
 
 // component
 const SingleActivity = () => {
   const { user, roles } = useSelector((state) => state.userState);
 
   const isAdmin = roles.includes("ADMIN");
-  const { activities } = useLoaderData();
+  const { activities, users } = useLoaderData();
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -77,6 +100,7 @@ const SingleActivity = () => {
         )}
       </div>
 
+      {/* isi */}
       <div className="mt-6 grid gap-y-8 lg:gap-x-16 lg:grid-cols-2">
         {/* IMG */}
         <img
@@ -101,6 +125,9 @@ const SingleActivity = () => {
           </p>
         </div>
       </div>
+
+      {/* daftar hadir */}
+      {users && <AttendanceList />}
     </section>
   );
 };

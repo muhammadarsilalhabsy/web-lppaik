@@ -96,7 +96,7 @@ const Users = () => {
                       <div className="badge badge-warning">Belum</div>
                     )}
                   </td>
-                  <th>
+                  <td>
                     <div className="flex justify-evenly gap-2">
                       <Link
                         to={`/users/${username}`}
@@ -122,7 +122,7 @@ const Users = () => {
                         </>
                       )}
                     </div>
-                  </th>
+                  </td>
                 </tr>
               );
             })}

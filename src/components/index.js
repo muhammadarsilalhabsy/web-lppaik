@@ -20,3 +20,4 @@ export { default as Avatar } from "./Avatar";
 export { default as DetailActivity } from "./DetailActivity";
 export { default as EditSingleUser } from "./EditSingleUser";
 export { default as FormControlBook } from "./FormControlBook";
+export { default as AttendanceList } from "./AttendanceList";

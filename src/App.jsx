@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         path: "activity/:id",
         element: <SingleActivity />,
         errorElement: <ErrorElement />,
-        loader: singleActivityLoader,
+        loader: singleActivityLoader(store),
       },
       {
         path: "about",
