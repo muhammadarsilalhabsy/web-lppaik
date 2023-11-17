@@ -1,6 +1,6 @@
 import { useNavigation } from "react-router-dom";
 
-const SubmitButton = ({ text, size, color }) => {
+const SubmitButton = ({ text, size, color, disabled }) => {
   const navigation = useNavigation();
   // console.log(navigation);
   const isSubmitting = navigation.state === "submitting";
@@ -8,7 +8,7 @@ const SubmitButton = ({ text, size, color }) => {
     <button
       type="submit"
       className={`btn ${color} ${size}`}
-      disabled={isSubmitting}
+      disabled={disabled || isSubmitting}
     >
       {isSubmitting ? (
         <>

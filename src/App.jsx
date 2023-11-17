@@ -48,6 +48,7 @@ import { action as createUserAction } from "./pages/CreateUsers";
 import { action as editUserAction } from "./pages/EditUser";
 import { action as singleUserAction } from "./pages/SingleUser";
 import { action as editControlBookAction } from "./pages/EditControlBook";
+import { action as createActivityAction } from "./pages/CreateActivity";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,7 @@ const router = createBrowserRouter([
             path: "create-activity",
             element: <CreateActivity />,
             errorElement: <ErrorElement />,
+            action: createActivityAction(store),
           },
           {
             path: "update-activity/:id",
