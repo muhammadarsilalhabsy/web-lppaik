@@ -1,19 +1,13 @@
-import { Form, Link, redirect } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import FormTextArea from "../components/FormTextArea";
-import FormTimeInput from "../components/FormTimeInput";
-import FormCheckbox from "../components/FormCheckbox";
-import { useState } from "react";
-import FormCheckboxWithOnChange from "../components/FormCheckboxWithOnChange";
+import { Form, redirect } from "react-router-dom";
 import { SubmitButton } from "../components";
-import { BiLinkExternal } from "react-icons/bi";
-import FormInputWithOnChange from "../components/FormInputIWithOnChange";
+
 import UploadImageActivity from "../components/UploadImageActivity";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { customFetch } from "../utils";
 import { removeUser } from "../features/user/userSlice";
-import DateInput from "../components/DateInput";
+import ActivityInput from "../components/ActivityInput";
+import { clearImages } from "../features/activity/activitySlice";
 
 export const action =
   (store) =>
@@ -30,7 +24,10 @@ export const action =
       mandatory,
       online,
     } = Object.fromEntries(formData);
+
     const { images } = store.getState().activityState;
+    const user = store.getState().userState.user;
+
     const data = {
       link,
       date,
@@ -43,9 +40,7 @@ export const action =
       mandatory: mandatory === "on" ? true : false,
       online: online === "on" ? true : false,
     };
-
-    const user = store.getState().userState.user;
-
+    console.log(data);
     try {
       const response = await customFetch.post("/activities", data, {
         headers: {
@@ -53,6 +48,7 @@ export const action =
         },
       });
       toast.success(response?.data?.message || "Success");
+      store.dispatch(clearImages());
       return redirect("/activity");
     } catch (error) {
       const msg = error.response.data.message;
@@ -66,92 +62,29 @@ export const action =
       return null;
     }
   };
+
 const CreateActivity = () => {
   const { images } = useSelector((state) => state.activityState);
-  const [onlineChecked, setOnlineChecked] = useState(false);
-  const [link, setLink] = useState("");
 
   return (
     <div className="bg-base-300 shadow-lg rounded-l-md p-4">
       <Form method="POST" className="flex flex-wrap">
         <div className="space-y-4 w-full md:w-1/2 p-4">
-          <FormInput
-            label="Judul kegiatan"
-            name="title"
-            size="input-sm"
-            defaultValue=""
+          <ActivityInput
+            date={new Date().toISOString().split("T")[0]}
+            endTime={new Date().toLocaleTimeString([], {
+              hour12: false,
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+            startTime={new Date().toLocaleTimeString([], {
+              hour12: false,
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+            mandatory={false}
+            online={false}
           />
-          <FormInput
-            label="Tempat / lokasi"
-            name="location"
-            size="input-sm"
-            defaultValue=""
-          />
-
-          <div className="flex justify-evenly">
-            <FormTimeInput
-              label="Mulai"
-              name="startTime"
-              defaultValue={new Date().toLocaleTimeString([], {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            />
-            <FormTimeInput
-              label="Berakhir"
-              name="endTime"
-              defaultValue={new Date().toLocaleTimeString([], {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            />
-            <DateInput
-              name="date"
-              label="tanggal"
-              defaultValue={new Date().toISOString().split("T")[0]}
-            />
-          </div>
-          <FormTextArea
-            label="Deskripsi"
-            name="description"
-            size="textarea-sm"
-            defaultValue=""
-          />
-          <div className="flex justify-evenly">
-            <FormCheckbox name="mandatory" label="Wajib" size="checkbox-sm" />
-            <FormCheckboxWithOnChange
-              name="online"
-              label="Online"
-              size="checkbox-sm"
-              checked={onlineChecked}
-              onChange={() => setOnlineChecked(!onlineChecked)}
-            />
-          </div>
-          {onlineChecked && (
-            <div className="flex justify-end">
-              <div className="w-11/12">
-                <FormInputWithOnChange
-                  label="link"
-                  name="link"
-                  size="input-sm"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
-                />
-              </div>
-              <div className="w-1/12 flex items-end">
-                <a
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2"
-                >
-                  <BiLinkExternal className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-          )}
         </div>
         <div className="space-y-4 w-full md:w-1/2 p-4 ">
           <UploadImageActivity />

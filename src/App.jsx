@@ -42,6 +42,7 @@ import { loader as certificateLoader } from "./pages/Certificate";
 import { loader as createUserLoader } from "./pages/CreateUsers";
 import { loader as editUserLoader } from "./pages/EditUser";
 import { loader as editControlBookLoader } from "./pages/EditControlBook";
+import { loader as editActivityLoader } from "./pages/UpdateActivity";
 
 // action
 import { action as createUserAction } from "./pages/CreateUsers";
@@ -49,6 +50,7 @@ import { action as editUserAction } from "./pages/EditUser";
 import { action as singleUserAction } from "./pages/SingleUser";
 import { action as editControlBookAction } from "./pages/EditControlBook";
 import { action as createActivityAction } from "./pages/CreateActivity";
+import { action as editActivityAction } from "./pages/UpdateActivity";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +105,8 @@ const router = createBrowserRouter([
             path: "update-activity/:id",
             element: <UpdateActivity />,
             errorElement: <ErrorElement />,
+            loader: editActivityLoader(store),
+            action: editActivityAction(store),
           },
           {
             path: "my-activity",

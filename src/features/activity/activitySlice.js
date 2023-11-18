@@ -12,6 +12,9 @@ const activitySlice = createSlice({
   name: "activity",
   initialState: getActivityItemsFromLocalStorage(),
   reducers: {
+    setImages: (state, action) => {
+      state.images = action.payload;
+    },
     addImage: (state, action) => {
       // tambahkan disiini
       state.images.push(action.payload);
@@ -20,8 +23,12 @@ const activitySlice = createSlice({
       const index = action.payload;
       state.images.splice(index, 1);
     },
+    clearImages: (state) => {
+      state.images = [];
+    },
   },
 });
 
-export const { addImage, removeImage } = activitySlice.actions;
+export const { addImage, removeImage, clearImages, setImages } =
+  activitySlice.actions;
 export default activitySlice.reducer;
