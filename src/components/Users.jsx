@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import profile from "../assets/haha.jpeg";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SectionTitle from "./SectionTitle";
 import { customFetch } from "../utils";
@@ -14,7 +14,7 @@ const Users = () => {
   const [users, setUsers] = useState(initialUsers);
 
   if (users.length < 1) {
-    return <SectionTitle text="Kami tidak menemukan hasil penacarian anda" />;
+    return <SectionTitle text="Kami tidak menemukan hasil pencarian anda" />;
   }
 
   async function handleDelete(username) {

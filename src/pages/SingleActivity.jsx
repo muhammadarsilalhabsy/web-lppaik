@@ -3,35 +3,54 @@ import { DetailActivity, AttendanceList } from "../components";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 // loader
 export const loader =
   (store) =>
   async ({ params }) => {
     const user = store.getState().userState.user;
+
     try {
       if (user) {
         const responses = await Promise.allSettled([
           customFetch(`/activities/${params.id}`),
           customFetch(`/activities/${params.id}/attendance`, {
             headers: {
-              "X-API-TOKEN": `${user.token}`,
+              "X-API-TOKEN": user.token,
             },
           }),
+          customFetch(`/activities/${params.id}/register/users`, {
+            headers: {
+              "X-API-TOKEN": user.token,
+            },
+          }),
+          // customFetch(`/activities/${params.id}/register`, {
+          //   headers: {
+          //     "X-API-TOKEN": user.token,
+          //   },
+          // }),
         ]);
 
         const successfulResponses = responses
           .filter((result) => result.status === "fulfilled")
           .map((result) => result.value.data.data);
 
-        const activities = successfulResponses[0]; // First response
-        const users = successfulResponses[1]; // Second response
+        const activities = successfulResponses[0];
+        const users = successfulResponses[1];
+        const userRegisters = successfulResponses[2];
+        const isRegister = successfulResponses[3];
 
-        return { activities, users };
+        return { activities, users, userRegisters, isRegister };
       } else {
         const response = await customFetch(`/activities/${params.id}`);
 
-        return { activities: response.data.data, users: undefined };
+        return {
+          activities: response.data.data,
+          users: undefined,
+          userRegisters: undefined,
+          isRegister: undefined,
+        };
       }
     } catch (error) {
       console.log(error);
@@ -42,15 +61,39 @@ export const loader =
 // component
 const SingleActivity = () => {
   const { user, roles } = useSelector((state) => state.userState);
+  const { id } = useParams();
+  const [isRegister, setIsRegister] = useState(false);
 
   const isAdmin = roles.includes("ADMIN");
-  const { activities, users } = useLoaderData();
-  const { id } = useParams();
+  const { activities, users, userRegisters } = useLoaderData();
 
   const navigate = useNavigate();
 
   const { title, date, images, location, description, startTime, endTime } =
     activities;
+
+  // handle function
+  const handleRegister = async () => {
+    try {
+      const response = await customFetch.post(
+        `/activities/${id}/register`,
+        null,
+        {
+          headers: {
+            "X-API-TOKEN": `${user.token}`,
+          },
+        }
+      );
+      const msg = response.data.message;
+      toast.success(msg || "Success register");
+      setIsRegister(true);
+    } catch (error) {
+      console.log(error);
+      const msg = null;
+      toast.error(msg || "Something error with the operation");
+      console.log(error);
+    }
+  };
 
   const handelDelete = async () => {
     try {
@@ -69,6 +112,23 @@ const SingleActivity = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    try {
+      const fetchIsRegister = async () => {
+        const response = await customFetch(`/activities/${id}/register`, {
+          headers: {
+            "X-API-TOKEN": user.token,
+          },
+        });
+        setIsRegister(response.data.data);
+      };
+      fetchIsRegister();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [isRegister]);
+
   return (
     <section>
       <div className="flex items-center justify-between">
@@ -126,8 +186,18 @@ const SingleActivity = () => {
         </div>
       </div>
 
-      {/* daftar hadir */}
-      {users && <AttendanceList />}
+      {user && (
+        <div className="mt-8 flex items-center justify-center">
+          <button
+            className="btn btn-primary btn-sm"
+            disabled={isRegister}
+            onClick={handleRegister}
+          >
+            Registrasi
+          </button>
+        </div>
+      )}
+      {(users || userRegisters) && <AttendanceList />}
     </section>
   );
 };

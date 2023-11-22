@@ -25,7 +25,6 @@ export const loader =
 export const action =
   (store) =>
   async ({ request, params }) => {
-    console.log(params);
     const formData = await request.formData();
     const {
       link,
@@ -54,7 +53,6 @@ export const action =
       mandatory: mandatory === "on" ? true : false,
       online: online === "on" ? true : false,
     };
-    console.log(data);
 
     try {
       const response = await customFetch.patch(
