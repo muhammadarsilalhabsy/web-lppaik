@@ -72,6 +72,12 @@ const SingleActivity = () => {
   const { title, date, images, location, description, startTime, endTime } =
     activities;
 
+  // Konversi string startTime menjadi objek Date
+  const activityStartTime = new Date(date + " " + startTime);
+  console.log(activityStartTime);
+  // Fungsi untuk mengecek apakah waktu sekarang lebih kecil dari startTime
+  const isRegistrationAllowed = isRegister || new Date() > activityStartTime;
+
   // handle function
   const handleRegister = async () => {
     try {
@@ -89,7 +95,7 @@ const SingleActivity = () => {
       setIsRegister(true);
     } catch (error) {
       console.log(error);
-      const msg = null;
+      const msg = error.response.data.message;
       toast.error(msg || "Something error with the operation");
       console.log(error);
     }
@@ -190,7 +196,7 @@ const SingleActivity = () => {
         <div className="mt-8 flex items-center justify-center">
           <button
             className="btn btn-primary btn-sm"
-            disabled={isRegister}
+            disabled={isRegistrationAllowed}
             onClick={handleRegister}
           >
             Registrasi
