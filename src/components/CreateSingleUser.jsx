@@ -47,6 +47,10 @@ const CreateSingleUser = () => {
         <FormCheckbox name="TUTOR" label="TUTOR" size="checkbox-sm" />
         <FormCheckbox name="ADMIN" label="ADMIN" size="checkbox-sm" />
       </div>
+      <div className="flex flex-row justify-evenly">
+        <FormCheckbox name="KETUA" label="KETUA" size="checkbox-sm" />
+        <FormCheckbox name="REKTOR" label="REKTOR" size="checkbox-sm" />
+      </div>
       <SubmitButton text="Tambahkan" size="btn-sm" color="btn-primary" />
     </Form>
   );

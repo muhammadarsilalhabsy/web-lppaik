@@ -3,6 +3,8 @@ import BTQList from "../components/BTQList";
 import { redirect, useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 // loader
 export const loader =
@@ -39,8 +41,37 @@ export const loader =
 
 // components
 const MyControlBook = () => {
+  const { completed, certificate, token } = useSelector(
+    (state) => state.userState.user
+  );
   const { control } = useLoaderData();
-  console.log(control);
+
+  const handleDownload = async () => {
+    try {
+      const response = await customFetch("/certificate/download", {
+        responseType: "blob",
+        headers: {
+          "X-API-TOKEN": token,
+        },
+      });
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sertifikat.pdf";
+
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (control.length < 1) {
     return (
       <SectionTitle text="Belum mengikuti program Baca Tulis Al-Qur'an satupun!" />
@@ -50,6 +81,15 @@ const MyControlBook = () => {
   return (
     <>
       <SectionTitle text="Laporan Baca Tulis Al-Qur'an" />
+
+      {completed && certificate && (
+        <div className="flex items-center justify-end mt-4">
+          <button onClick={handleDownload} className="btn btn-primary btn-sm">
+            Print sertifikat
+          </button>
+        </div>
+      )}
+
       <BTQList />
       <PaginationContainer />
     </>

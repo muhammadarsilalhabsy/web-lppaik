@@ -38,7 +38,7 @@ const BTQList = () => {
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <h4 className="mb-4 capitalize text-sm sm:text-base">
         Total pelajaran : {control.length}
       </h4>
