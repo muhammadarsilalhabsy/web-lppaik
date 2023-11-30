@@ -2,6 +2,7 @@ import { MyActivityList, PagingContainer, SectionTitle } from "../components";
 import { useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 export const loader =
   (store) =>
   async ({ request }) => {
@@ -34,6 +35,36 @@ export const loader =
   };
 const MyActivity = () => {
   const { activities } = useLoaderData();
+  const { token } = useSelector((state) => state.userState.user);
+
+  const handleDownload = async () => {
+    try {
+      const response = await customFetch(
+        "/activities/download-current-user-activity",
+        {
+          responseType: "blob",
+          headers: {
+            "X-API-TOKEN": token,
+          },
+        }
+      );
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "my-activity.pdf";
+
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (activities.length < 1) {
     return <SectionTitle text="Belum mengikuti kegiatan satupun!" />;
@@ -41,6 +72,17 @@ const MyActivity = () => {
   return (
     <>
       <SectionTitle text="Kegiatan yang telah diikuti" size="sm:text-lg" />
+
+      <div className="flex items-center justify-end mt-4">
+        <button
+          disabled={activities.length < 1}
+          onClick={handleDownload}
+          className="btn btn-primary btn-sm"
+        >
+          Print
+        </button>
+      </div>
+
       <MyActivityList />
       <PagingContainer />
     </>
