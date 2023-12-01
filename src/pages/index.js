@@ -19,3 +19,4 @@ export { default as CreateUsers } from "./CreateUsers";
 export { default as SingleUser } from "./SingleUser";
 export { default as PrivateRoutes } from "./PrivateRoutes";
 export { default as EditControlBook } from "./EditControlBook";
+export { default as UpdatePassword } from "./UpdatePassword";

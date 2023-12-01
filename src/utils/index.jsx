@@ -1,7 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
-import { useSelector } from "react-redux";
 dayjs.locale("id");
 
 const prodURL = "http://localhost:8080/api/v1";
@@ -9,13 +8,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 export const customFetch = axios.create({
   baseURL: prodURL,
-});
-
-export const customFetchWithHeader = axios.create({
-  baseURL: prodURL,
-  headers: {
-    "X-API-TOKEN": user.token,
-  },
 });
 
 export function calculateNumber(page, count) {

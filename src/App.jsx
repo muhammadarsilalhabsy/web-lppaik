@@ -21,6 +21,7 @@ import {
   EditControlBook,
   SingleActivity,
   SingleUser,
+  UpdatePassword,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -51,6 +52,8 @@ import { action as singleUserAction } from "./pages/SingleUser";
 import { action as editControlBookAction } from "./pages/EditControlBook";
 import { action as createActivityAction } from "./pages/CreateActivity";
 import { action as editActivityAction } from "./pages/UpdateActivity";
+import { action as updateUserAction } from "./pages/Profile";
+import { action as updatePasswordAction } from "./pages/UpdatePassword";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +97,13 @@ const router = createBrowserRouter([
             path: "profile",
             element: <Profile />,
             errorElement: <ErrorElement />,
+            action: updateUserAction(store),
+          },
+          {
+            path: "update-password",
+            element: <UpdatePassword />,
+            errorElement: <ErrorElement />,
+            action: updatePasswordAction(store),
           },
           {
             path: "create-activity",

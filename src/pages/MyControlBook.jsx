@@ -46,6 +46,31 @@ const MyControlBook = () => {
   );
   const { control } = useLoaderData();
 
+  const handleDownloadCBD = async () => {
+    try {
+      const response = await customFetch("/control-book/download", {
+        responseType: "blob",
+        headers: {
+          "X-API-TOKEN": token,
+        },
+      });
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "laporan-btq.pdf";
+
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleDownload = async () => {
     try {
       const response = await customFetch("/certificate/download", {
@@ -82,13 +107,21 @@ const MyControlBook = () => {
     <>
       <SectionTitle text="Laporan Baca Tulis Al-Qur'an" />
 
-      {completed && certificate && (
-        <div className="flex items-center justify-end mt-4">
+      <div className="flex gap-4 items-center justify-end mt-4">
+        {completed && certificate && (
           <button onClick={handleDownload} className="btn btn-primary btn-sm">
             Print sertifikat
           </button>
-        </div>
-      )}
+        )}
+        {control.length >= 1 && (
+          <button
+            onClick={handleDownloadCBD}
+            className="btn btn-primary btn-sm"
+          >
+            Print kontrol book
+          </button>
+        )}
+      </div>
 
       <BTQList />
       <PaginationContainer />

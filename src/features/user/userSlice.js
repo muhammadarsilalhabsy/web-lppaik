@@ -50,6 +50,15 @@ const userSlice = createSlice({
       localStorage.removeItem("roles");
       toast.success("Logged out successfully");
     },
+    updateUser: (state, action) => {
+      const { email, motto } = action.payload;
+
+      if (state.user) {
+        state.user.email = email;
+        state.user.motto = motto;
+        localStorage.setItem("user", JSON.stringify(state.user));
+      }
+    },
     toggleTheme: (state) => {
       const { dracula, winter } = themes;
       state.theme = state.theme === dracula ? winter : dracula;
@@ -69,6 +78,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginUser, logoutUser, toggleTheme, removeUser, setShow } =
-  userSlice.actions;
+export const {
+  loginUser,
+  logoutUser,
+  toggleTheme,
+  removeUser,
+  setShow,
+  updateUser,
+} = userSlice.actions;
 export default userSlice.reducer;

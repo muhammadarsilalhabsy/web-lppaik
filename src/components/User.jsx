@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import profile from "../assets/haha.jpeg";
 import { customFetch } from "../utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../features/user/userSlice";
 
 const User = ({ user, hidden }) => {
@@ -38,9 +38,12 @@ const User = ({ user, hidden }) => {
       </h3>
       {!hidden && (
         <>
-          <button type="button" className="mt-6 btn btn-secondary btn-sm px-6">
+          <Link
+            to="/update-password"
+            className="mt-6 btn btn-secondary btn-sm px-6"
+          >
             ubah password
-          </button>
+          </Link>
           <button
             type="button"
             onClick={handleLogout}
