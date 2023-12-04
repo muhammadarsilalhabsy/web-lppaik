@@ -41,30 +41,6 @@ const AttendanceList = () => {
     }
   }
 
-  // async function handleAbsent(username, regId) {
-  //   try {
-  //     const response = await customFetch.post(
-  //       `/activities/${params.id}/for/${username}/with-register/${regId}`,
-  //       null,
-  //       {
-  //         headers: {
-  //           "X-API-TOKEN": `${user.token}`,
-  //         },
-  //       }
-  //     );
-  //     const msg = response.data.message;
-  //     toast.success(msg || "Success added");
-
-  //     setUserRegisters(
-  //       userRegisters.filter((user) => user.username !== username)
-  //     );
-  //   } catch (error) {
-  //     const msg = error.response.data.message;
-  //     toast.error(msg || "Something error with the operation");
-  //     console.log(error);
-  //   }
-  // }
-
   async function handleAbsent(username, regId) {
     try {
       const response = await customFetch.post(

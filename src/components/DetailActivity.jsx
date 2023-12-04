@@ -5,8 +5,9 @@ import { GrLocation } from "react-icons/gr";
 import { HiStatusOnline } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { getFormatDate, getTimeWITA } from "../utils";
+import { MdMyLocation } from "react-icons/md";
 
-const DetailActivity = ({ date, startTime, endTime, location }) => {
+const DetailActivity = ({ date, startTime, endTime, location, link }) => {
   return (
     <div className="bg-base-200 rounded-md p-4 ">
       <div className="grid md:grid-cols-2 gap-4 ">
@@ -28,9 +29,9 @@ const DetailActivity = ({ date, startTime, endTime, location }) => {
             </div>
           </div>
         </div>
-        {!location ? (
+        {!link ? (
           <div className="flex items-center gap-4">
-            <GrLocation className="h-7 w-7" />
+            <MdMyLocation className="h-7 w-7" />
             <div>
               <h4 className="text-xs font-semibold">Location</h4>
               <p className="text-xs">{location}</p>
@@ -41,7 +42,7 @@ const DetailActivity = ({ date, startTime, endTime, location }) => {
             <HiStatusOnline className="h-7 w-7" />
             <div className="flex flex-col gap-1">
               <h4 className="text-xs font-semibold">Online</h4>
-              <Link to="https://pti.umkendari.ac.id/" className="p-0">
+              <Link to={link} className="p-0">
                 <BiLinkExternal />
               </Link>
             </div>

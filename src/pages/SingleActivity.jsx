@@ -69,12 +69,20 @@ const SingleActivity = () => {
 
   const navigate = useNavigate();
 
-  const { title, date, images, location, description, startTime, endTime } =
-    activities;
+  const {
+    title,
+    date,
+    images,
+    location,
+    description,
+    startTime,
+    endTime,
+    link,
+  } = activities;
 
   // Konversi string startTime menjadi objek Date
   const activityStartTime = new Date(date + " " + startTime);
-  console.log(activityStartTime);
+
   // Fungsi untuk mengecek apakah waktu sekarang lebih kecil dari startTime
   const isRegistrationAllowed = isRegister || new Date() > activityStartTime;
 
@@ -134,7 +142,7 @@ const SingleActivity = () => {
       console.log(error);
     }
   }, [isRegister]);
-
+  console.log(activities);
   return (
     <section>
       <div className="flex items-center justify-between">
@@ -174,17 +182,18 @@ const SingleActivity = () => {
           alt={title}
           className="h-96 w-full object-cover rounded-lg"
         />
-        {/* DEtail */}
+        {/* Detail */}
         <div>
           <h2 className="text-2xl lg:text-3xl text-center lg:text-left font-bold mb-6">
             {title}
           </h2>
-          {/* <h1 className="text-3xl font-bold capitalize">{title}</h1> */}
+
           <DetailActivity
             date={date}
             startTime={startTime}
             endTime={endTime}
             location={location}
+            link={link}
           />
           <p className="mt-6 leading-8 lg:h-40 lg:overflow-auto">
             {description}

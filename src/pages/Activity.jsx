@@ -2,6 +2,7 @@ import {
   Filters,
   ActivitiesContainer,
   PaginationContainer,
+  SearchOnly,
 } from "../components";
 import { MdOutlineAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -28,7 +29,7 @@ const Activity = () => {
   const role = true;
   return (
     <>
-      <Filters text="title" link="/activity" />
+      <SearchOnly link="/activity" name="title" />
       <ActivitiesContainer />
       <PaginationContainer />
       {role && (

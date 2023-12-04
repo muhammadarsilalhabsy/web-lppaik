@@ -5,10 +5,8 @@ import ActivityGrid from "./ActivityGrid";
 import ActivityList from "./ActivityList";
 
 const ActivitiesContainer = () => {
-  // const { meta } = useLoaderData();
   const { activities } = useLoaderData();
-  // console.log(meta);
-  // const totalProducts = meta.pagination.total;
+
   const [layout, setLayout] = useState("grid");
   const setActivityStyle = (pattern) => {
     return `text-xl btn btn-circle btn-sm ${
@@ -21,10 +19,7 @@ const ActivitiesContainer = () => {
     <>
       {/* HEADER */}
       <div className="flex justify-between items-center border-b border-base-300 mt-8 pb-5">
-        <h4 className="font-medium text-md">
-          {/* {totalProducts} product{totalProducts > 1 && "s"} */}
-          {activities.length} kegiatan
-        </h4>
+        <h4 className="font-medium text-md">{activities.length} kegiatan</h4>
         <div className="flex gap-x-2">
           <button
             type="button"
@@ -42,11 +37,11 @@ const ActivitiesContainer = () => {
           </button>
         </div>
       </div>
-      {/* PRODUCTS */}
+      {/* ACTIVITIS */}
       <div>
         {activities.length === 0 ? (
           <h1 className="text-2xl mt-16">
-            Sorry, no products matched your search...
+            Sorry, no activity matched your search...
           </h1>
         ) : layout === "grid" ? (
           <ActivityGrid />
