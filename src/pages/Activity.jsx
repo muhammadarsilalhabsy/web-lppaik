@@ -7,12 +7,15 @@ import {
 import { MdOutlineAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { customFetch } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { clearImages } from "../features/activity/activitySlice";
+
+// loader
 export const loader = async ({ request }) => {
-  console.log(request);
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
-  console.log(params);
+
   try {
     const response = await customFetch("/activities?size=9", { params });
 
@@ -25,15 +28,23 @@ export const loader = async ({ request }) => {
     return null;
   }
 };
+
+// page
 const Activity = () => {
-  const role = true;
+  const { roles } = useSelector((state) => state.userState);
+  const isAdmin = roles.includes("ADMIN");
+  const dispatch = useDispatch();
+  function handelRemove() {
+    dispatch(clearImages());
+  }
   return (
     <>
       <SearchOnly link="/activity" name="title" />
       <ActivitiesContainer />
       <PaginationContainer />
-      {role && (
+      {isAdmin && (
         <Link
+          onClick={handelRemove}
           title="Buat kegiatan baru"
           to="/create-activity"
           className="btn btn-circle btn-info fixed bottom-7 right-8 xl:right-28 xl:btn-lg z-[9999]"

@@ -66,10 +66,10 @@ export const action =
       toast.success(response?.data?.message || "Success");
       return redirect("/users");
     } catch (error) {
-      console.log(error);
+      const msg = error.response.data.message;
 
-      toast.error("Something error with your input");
-      if (error.response.status === 401 || 403) {
+      toast.error(msg || "Something error with your input");
+      if (error.response.status === 401) {
         store.dispatch(removeUser());
         return redirect("/login");
       }

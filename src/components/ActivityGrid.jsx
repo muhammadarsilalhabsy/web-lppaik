@@ -3,7 +3,7 @@ import { getFormatDate } from "../utils";
 
 const ActivityGrid = () => {
   const { activities } = useLoaderData();
-  // console.log(activities);
+
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {activities.map((activity) => {

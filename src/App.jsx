@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   Login,
   Error,
-  Register,
   HomeLayout,
   Landing,
   Activity,
@@ -22,13 +21,12 @@ import {
   SingleActivity,
   SingleUser,
   UpdatePassword,
+  VipRoutes,
+  VvipRoutes,
 } from "./pages";
 
 import { ErrorElement } from "./components";
 import { store } from "./store";
-
-// actions
-import { action as loginAction } from "./pages/Login";
 
 // loaders
 // import { loader as loginLoader } from "./pages/Login";
@@ -46,6 +44,7 @@ import { loader as editControlBookLoader } from "./pages/EditControlBook";
 import { loader as editActivityLoader } from "./pages/UpdateActivity";
 
 // action
+import { action as loginAction } from "./pages/Login";
 import { action as createUserAction } from "./pages/CreateUsers";
 import { action as editUserAction } from "./pages/EditUser";
 import { action as singleUserAction } from "./pages/SingleUser";
@@ -106,19 +105,6 @@ const router = createBrowserRouter([
             action: updatePasswordAction(store),
           },
           {
-            path: "create-activity",
-            element: <CreateActivity />,
-            errorElement: <ErrorElement />,
-            action: createActivityAction(store),
-          },
-          {
-            path: "update-activity/:id",
-            element: <UpdateActivity />,
-            errorElement: <ErrorElement />,
-            loader: editActivityLoader(store),
-            action: editActivityAction(store),
-          },
-          {
             path: "my-activity",
             element: <MyActivity />,
             errorElement: <ErrorElement />,
@@ -130,40 +116,62 @@ const router = createBrowserRouter([
             errorElement: <ErrorElement />,
             loader: myControlBookLoader(store),
           },
-
           {
-            path: "users",
-            element: <UserManagement />,
-            errorElement: <ErrorElement />,
-            loader: userManagementLoader(store),
+            element: <VvipRoutes />,
+            children: [
+              {
+                path: "create-activity",
+                element: <CreateActivity />,
+                errorElement: <ErrorElement />,
+                action: createActivityAction(store),
+              },
+              {
+                path: "update-activity/:id",
+                element: <UpdateActivity />,
+                errorElement: <ErrorElement />,
+                loader: editActivityLoader(store),
+                action: editActivityAction(store),
+              },
+              {
+                path: "users/create",
+                element: <CreateUsers />,
+                errorElement: <ErrorElement />,
+                loader: createUserLoader,
+                action: createUserAction(store),
+              },
+              {
+                path: "users/edit/:id",
+                element: <EditUser />,
+                errorElement: <ErrorElement />,
+                loader: editUserLoader,
+                action: editUserAction(store),
+              },
+            ],
           },
           {
-            path: "users/create",
-            element: <CreateUsers />,
-            errorElement: <ErrorElement />,
-            loader: createUserLoader,
-            action: createUserAction(store),
-          },
-          {
-            path: "users/edit/:id",
-            element: <EditUser />,
-            errorElement: <ErrorElement />,
-            loader: editUserLoader,
-            action: editUserAction(store),
-          },
-          {
-            path: "users/:id",
-            element: <SingleUser />,
-            errorElement: <ErrorElement />,
-            loader: singleUserLoader(store),
-            action: singleUserAction(store),
-          },
-          {
-            path: "control-book/:id",
-            element: <EditControlBook />,
-            errorElement: <ErrorElement />,
-            loader: editControlBookLoader,
-            action: editControlBookAction(store),
+            element: <VipRoutes />,
+            children: [
+              {
+                path: "users",
+                element: <UserManagement />,
+                errorElement: <ErrorElement />,
+                loader: userManagementLoader(store),
+              },
+              {
+                path: "users/:id",
+                element: <SingleUser />,
+                errorElement: <ErrorElement />,
+                loader: singleUserLoader(store),
+                action: singleUserAction(store),
+              },
+              {
+                path: "control-book/:id",
+                element: <EditControlBook />,
+                errorElement: <ErrorElement />,
+                loader: editControlBookLoader,
+                action: editControlBookAction(store),
+              },
+            ],
           },
         ],
       },
@@ -180,11 +188,6 @@ const router = createBrowserRouter([
     element: <Login />,
     errorElement: <Error />,
     action: loginAction(store),
-  },
-  {
-    path: "register",
-    element: <Register />,
-    errorElement: <Error />,
   },
 ]);
 const App = () => {

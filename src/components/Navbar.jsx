@@ -90,7 +90,13 @@ const Navbar = () => {
             >
               <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <img
-                  src={user.avatar ? IMG_URL + user.avatar : profile}
+                  src={
+                    user.avatar
+                      ? user.avatar.startsWith("blob:")
+                        ? user.avatar
+                        : IMG_URL + user.avatar
+                      : profile
+                  }
                   alt="profile"
                 />
               </div>

@@ -26,6 +26,7 @@ const EditSingleUser = () => {
         size="input-sm"
         type="text"
         defaultValue={user.username}
+        disabled={true}
       />
       <FormInput
         name="name"

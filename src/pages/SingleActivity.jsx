@@ -78,6 +78,7 @@ const SingleActivity = () => {
     startTime,
     endTime,
     link,
+    mandatory,
   } = activities;
 
   // Konversi string startTime menjadi objek Date
@@ -142,7 +143,7 @@ const SingleActivity = () => {
       console.log(error);
     }
   }, [isRegister]);
-  console.log(activities);
+
   return (
     <section>
       <div className="flex items-center justify-between">
@@ -194,6 +195,7 @@ const SingleActivity = () => {
             endTime={endTime}
             location={location}
             link={link}
+            mandatory={mandatory}
           />
           <p className="mt-6 leading-8 lg:h-40 lg:overflow-auto">
             {description}
@@ -201,7 +203,7 @@ const SingleActivity = () => {
         </div>
       </div>
 
-      {user && (
+      {user && !mandatory && (
         <div className="mt-8 flex items-center justify-center">
           <button
             className="btn btn-primary btn-sm"
@@ -212,7 +214,7 @@ const SingleActivity = () => {
           </button>
         </div>
       )}
-      {(users || userRegisters) && <AttendanceList />}
+      {!mandatory && (users || userRegisters) && <AttendanceList />}
     </section>
   );
 };

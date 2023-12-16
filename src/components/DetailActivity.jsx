@@ -7,17 +7,27 @@ import { Link } from "react-router-dom";
 import { getFormatDate, getTimeWITA } from "../utils";
 import { MdMyLocation } from "react-icons/md";
 
-const DetailActivity = ({ date, startTime, endTime, location, link }) => {
+const DetailActivity = ({
+  date,
+  startTime,
+  endTime,
+  location,
+  link,
+  mandatory,
+}) => {
   return (
     <div className="bg-base-200 rounded-md p-4 ">
       <div className="grid md:grid-cols-2 gap-4 ">
-        <div className="flex items-center gap-4">
-          <AiTwotoneCalendar className="h-7 w-7" />
-          <div>
-            <h4 className="text-xs font-semibold">Tanggal</h4>
-            <p className="text-xs">{getFormatDate(date)}</p>
+        {!mandatory && (
+          <div className="flex items-center gap-4">
+            <AiTwotoneCalendar className="h-7 w-7" />
+            <div>
+              <h4 className="text-xs font-semibold">Tanggal</h4>
+              <p className="text-xs">{getFormatDate(date)}</p>
+            </div>
           </div>
-        </div>
+        )}
+
         <div className="flex items-center gap-4">
           <BiTime className="h-7 w-7" />
           <div>

@@ -56,17 +56,14 @@ const AttendanceList = () => {
       const msg = response.data.message;
       toast.success(msg || "Success added");
 
-      // Remove the user from userRegisters
       setUserRegisters((prevUserRegisters) =>
         prevUserRegisters.filter((user) => user.username !== username)
       );
 
-      // Find the user in userRegisters based on the username
       const absentUser = userRegisters.find(
         (user) => user.username === username
       );
 
-      // Add the absent user to the users state
       setUsers((prevUsers) => [...prevUsers, absentUser]);
     } catch (error) {
       const msg = error.response.data.message;
@@ -101,11 +98,14 @@ const AttendanceList = () => {
   return (
     <div
       className={`mt-6 ${
-        userRegisters.length !== 0 && "grid gap-y-8 lg:gap-x-16 lg:grid-cols-2"
+        (isAdmin || isKating) &&
+        userRegisters.length !== 0 &&
+        "grid gap-y-8 lg:gap-x-16 lg:grid-cols-2"
       }`}
     >
       {/* LIST USERS REGISTERS */}
-      {userRegisters.length !== 0 && (
+
+      {(isAdmin || isKating) && userRegisters.length !== 0 && (
         <div className="overflow-x-auto mt-8">
           <table className="table">
             <thead>
@@ -140,7 +140,6 @@ const AttendanceList = () => {
                       <td>
                         <p className="capitalize ">{major}</p>
                       </td>
-
                       <td>
                         <div className="flex justify-evenly gap-2">
                           <button
@@ -175,7 +174,7 @@ const AttendanceList = () => {
               <tr className="text-center">
                 <th>Nama</th>
                 <th>Jurusan</th>
-                <th>Aksi</th>
+                {(isAdmin || isKating) && <th>Aksi</th>}
               </tr>
             </thead>
             <tbody>

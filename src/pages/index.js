@@ -1,6 +1,5 @@
 export { default as Error } from "./Error";
 export { default as Login } from "./Login";
-export { default as Register } from "./Register";
 export { default as HomeLayout } from "./HomeLayout";
 export { default as About } from "./About";
 export { default as Activity } from "./Activity";
@@ -18,5 +17,7 @@ export { default as CreateActivity } from "./CreateActivity";
 export { default as CreateUsers } from "./CreateUsers";
 export { default as SingleUser } from "./SingleUser";
 export { default as PrivateRoutes } from "./PrivateRoutes";
+export { default as VipRoutes } from "./VipRoutes";
+export { default as VvipRoutes } from "./VvipRoutes";
 export { default as EditControlBook } from "./EditControlBook";
 export { default as UpdatePassword } from "./UpdatePassword";

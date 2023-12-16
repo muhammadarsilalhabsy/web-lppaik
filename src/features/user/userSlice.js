@@ -59,6 +59,14 @@ const userSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(state.user));
       }
     },
+    updateUserProfile: (state, action) => {
+      const { avatar } = action.payload;
+      console.log(avatar);
+      if (state.user) {
+        state.user.avatar = avatar;
+        localStorage.setItem("user", JSON.stringify(state.user));
+      }
+    },
     toggleTheme: (state) => {
       const { dracula, winter } = themes;
       state.theme = state.theme === dracula ? winter : dracula;
@@ -85,5 +93,6 @@ export const {
   removeUser,
   setShow,
   updateUser,
+  updateUserProfile,
 } = userSlice.actions;
 export default userSlice.reducer;

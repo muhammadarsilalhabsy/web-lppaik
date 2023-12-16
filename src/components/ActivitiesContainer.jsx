@@ -41,7 +41,7 @@ const ActivitiesContainer = () => {
       <div>
         {activities.length === 0 ? (
           <h1 className="text-2xl mt-16">
-            Sorry, no activity matched your search...
+            Kami tidak menemukan hasil pencarian anda
           </h1>
         ) : layout === "grid" ? (
           <ActivityGrid />
