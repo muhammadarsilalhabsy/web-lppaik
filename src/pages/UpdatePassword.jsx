@@ -20,14 +20,14 @@ export const action =
           "X-API-TOKEN": user.token,
         },
       });
-      console.log(response);
+
       toast.success(response?.data?.message || "Success");
       return redirect("/profile");
     } catch (error) {
       const msg = error.response.data.message;
 
       toast.error(msg || "Something error with your input");
-      console.log(error.response.status);
+
       if (error.response.status === 401) {
         store.dispatch(removeUser());
         return redirect("/login");

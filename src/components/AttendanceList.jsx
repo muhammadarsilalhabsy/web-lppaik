@@ -5,7 +5,8 @@ import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import profile from "../assets/haha.jpeg";
 
-const AttendanceList = () => {
+const AttendanceList = ({ expired }) => {
+  console.log(expired);
   const { roles, user } = useSelector((state) => state.userState);
   const params = useParams();
   const IMG_URL = "http://localhost:8080/api/v1/image/";
@@ -33,7 +34,6 @@ const AttendanceList = () => {
       toast.success(msg || "Success delete");
 
       setUsers(users.filter((user) => user.username !== username));
-      console.log(response);
     } catch (error) {
       const msg = error.response.data.message;
       toast.error(msg || "Something error with the operation");
@@ -98,14 +98,14 @@ const AttendanceList = () => {
   return (
     <div
       className={`mt-6 ${
-        (isAdmin || isKating) &&
+        (isAdmin || (isKating && !expired)) &&
         userRegisters.length !== 0 &&
         "grid gap-y-8 lg:gap-x-16 lg:grid-cols-2"
       }`}
     >
       {/* LIST USERS REGISTERS */}
 
-      {(isAdmin || isKating) && userRegisters.length !== 0 && (
+      {(isAdmin || (isKating && !expired)) && userRegisters.length !== 0 && (
         <div className="overflow-x-auto mt-8">
           <table className="table">
             <thead>
@@ -140,24 +140,26 @@ const AttendanceList = () => {
                       <td>
                         <p className="capitalize ">{major}</p>
                       </td>
-                      <td>
-                        <div className="flex justify-evenly gap-2">
-                          <button
-                            onClick={() => handleAbsent(username, regId)}
-                            className="btn btn-success btn-sm"
-                          >
-                            Hadir
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleDeleteRegister(username, regId)
-                            }
-                            className="btn btn-error btn-sm"
-                          >
-                            remove
-                          </button>
-                        </div>
-                      </td>
+                      {(isAdmin || (isKating && !expired)) && (
+                        <td>
+                          <div className="flex justify-evenly gap-2">
+                            <button
+                              onClick={() => handleAbsent(username, regId)}
+                              className="btn btn-success btn-sm"
+                            >
+                              Hadir
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleDeleteRegister(username, regId)
+                              }
+                              className="btn btn-error btn-sm"
+                            >
+                              remove
+                            </button>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
@@ -174,7 +176,7 @@ const AttendanceList = () => {
               <tr className="text-center">
                 <th>Nama</th>
                 <th>Jurusan</th>
-                {(isAdmin || isKating) && <th>Aksi</th>}
+                {(isAdmin || (isKating && !expired)) && <th>Aksi</th>}
               </tr>
             </thead>
             <tbody>
@@ -204,7 +206,7 @@ const AttendanceList = () => {
                       </td>
                       <td>
                         <div className="flex items-center justify-center">
-                          {(isAdmin || isKating) && (
+                          {(isAdmin || (isKating && !expired)) && (
                             <button
                               onClick={() => handleDelete(username)}
                               className="btn btn-error btn-sm"

@@ -13,6 +13,7 @@ export { default as UserDetail } from "./UserDetail";
 export { default as ActivitiesContainer } from "./ActivitiesContainer";
 export { default as Filters } from "./Filters";
 export { default as SearchOnly } from "./SearchOnly";
+export { default as Search } from "./Search";
 export { default as MyActivityList } from "./MyActivityList";
 export { default as PaginationContainer } from "./PaginationContainer";
 export { default as PagingContainer } from "./PagingContainer";

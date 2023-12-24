@@ -1,9 +1,21 @@
-import { useLoaderData, Link, useParams, useNavigate } from "react-router-dom";
-import { DetailActivity, AttendanceList } from "../components";
+import {
+  useLoaderData,
+  Link,
+  useParams,
+  useNavigate,
+  redirect,
+} from "react-router-dom";
+import {
+  DetailActivity,
+  AttendanceList,
+  SearchOnly,
+  Search,
+} from "../components";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { removeUser } from "../features/user/userSlice";
 
 // loader
 export const loader =
@@ -25,11 +37,6 @@ export const loader =
               "X-API-TOKEN": user.token,
             },
           }),
-          // customFetch(`/activities/${params.id}/register`, {
-          //   headers: {
-          //     "X-API-TOKEN": user.token,
-          //   },
-          // }),
         ]);
 
         const successfulResponses = responses
@@ -58,6 +65,40 @@ export const loader =
     }
   };
 
+// action
+export const action =
+  (store) =>
+  async ({ request, params }) => {
+    const formData = await request.formData();
+    const { username } = Object.fromEntries(formData);
+
+    const user = store.getState().userState.user;
+
+    try {
+      const response = await customFetch.post(
+        `/activities/${params.id}/for/${username}`,
+        null,
+        {
+          headers: {
+            "X-API-TOKEN": user.token,
+          },
+        }
+      );
+      console.log(response);
+      toast.success(response?.data?.message || "Success");
+      return null;
+    } catch (error) {
+      const msg = error.response.data.message;
+
+      toast.error(msg || "Something error with your input");
+      console.log(error.response.status);
+      if (error.response.status === 401) {
+        store.dispatch(removeUser());
+        return redirect("/login");
+      }
+      return null;
+    }
+  };
 // component
 const SingleActivity = () => {
   const { user, roles } = useSelector((state) => state.userState);
@@ -84,8 +125,10 @@ const SingleActivity = () => {
   // Konversi string startTime menjadi objek Date
   const activityStartTime = new Date(date + " " + startTime);
 
+  const isDateExpired = new Date() > activityStartTime;
+
   // Fungsi untuk mengecek apakah waktu sekarang lebih kecil dari startTime
-  const isRegistrationAllowed = isRegister || new Date() > activityStartTime;
+  const isRegistrationAllowed = isRegister || isDateExpired;
 
   // handle function
   const handleRegister = async () => {
@@ -204,17 +247,26 @@ const SingleActivity = () => {
       </div>
 
       {user && !mandatory && (
-        <div className="mt-8 flex items-center justify-center">
-          <button
-            className="btn btn-primary btn-sm"
-            disabled={isRegistrationAllowed}
-            onClick={handleRegister}
-          >
-            Registrasi
-          </button>
+        <div className="mt-8">
+          {isAdmin && (
+            <div className="lg:w-1/2 md:w-3/5 w-full mx-auto mb-8">
+              <Search name="username" find="Tambah" label="ID" />
+            </div>
+          )}
+          <div className="flex items-center justify-center">
+            <button
+              className="btn btn-primary btn-sm"
+              disabled={isRegistrationAllowed}
+              onClick={handleRegister}
+            >
+              Registrasi
+            </button>
+          </div>
         </div>
       )}
-      {!mandatory && (users || userRegisters) && <AttendanceList />}
+      {!mandatory && (users || userRegisters) && (
+        <AttendanceList expired={isDateExpired} />
+      )}
     </section>
   );
 };

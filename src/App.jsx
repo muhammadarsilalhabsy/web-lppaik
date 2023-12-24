@@ -53,6 +53,7 @@ import { action as createActivityAction } from "./pages/CreateActivity";
 import { action as editActivityAction } from "./pages/UpdateActivity";
 import { action as updateUserAction } from "./pages/Profile";
 import { action as updatePasswordAction } from "./pages/UpdatePassword";
+import { action as singleActivityAction } from "./pages/SingleActivity";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,7 @@ const router = createBrowserRouter([
         element: <SingleActivity />,
         errorElement: <ErrorElement />,
         loader: singleActivityLoader(store),
+        action: singleActivityAction(store),
       },
       {
         path: "about",
