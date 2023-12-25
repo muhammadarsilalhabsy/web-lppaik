@@ -17,6 +17,31 @@ export const customFetch = axios.create({
   },
 });
 
+export const getImage = async (imageName) => {
+  try {
+    const apiUrl = prodURL + "/api/v1/image/" + imageName;
+
+    const response = await axios.get(apiUrl, {
+      responseType: "arraybuffer",
+      headers: { "ngrok-skip-browser-warning": true },
+    });
+
+    const base64String = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ""
+      )
+    );
+
+    const imageUrl = `data:${response.headers["content-type"]};base64,${base64String}`;
+
+    return imageUrl;
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    throw error;
+  }
+};
+
 export function calculateNumber(page, count) {
   let number = count; // Nilai awal number
 

@@ -5,25 +5,45 @@ import NavLinks from "./NavLinks";
 import profile from "../assets/haha.jpeg";
 import { logoutUser, toggleTheme } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { customFetch } from "../utils";
+import { customFetch, getImage } from "../utils";
 import UserLinks from "./UserLinks";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   // selector
   const user = useSelector((state) => state.userState.user);
   const theme = useSelector((state) => state.userState.theme);
+  const [avatarImage, setAvatarImage] = useState("");
   const isDarkTheme = theme === "dracula";
-  const IMG_URL = import.meta.env.VITE_SPRING_API_URL + "/api/v1/image/";
 
   // hooks
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // handle
+  // handle theme
   function handleTheme() {
     dispatch(toggleTheme());
   }
 
+  // getImage
+  async function getAvatar() {
+    try {
+      const response = await getImage(user.avatar);
+      setAvatarImage(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (user.avatar) {
+      if (!user.avatar.startsWith("blob:")) {
+        getAvatar();
+      }
+    }
+  }, []);
+
+  // handel loggout
   const handleLogout = async () => {
     try {
       const response = await customFetch.delete("/auth/logout", {
@@ -94,7 +114,7 @@ const Navbar = () => {
                     user.avatar
                       ? user.avatar.startsWith("blob:")
                         ? user.avatar
-                        : IMG_URL + user.avatar
+                        : avatarImage
                       : profile
                   }
                   alt="profile"

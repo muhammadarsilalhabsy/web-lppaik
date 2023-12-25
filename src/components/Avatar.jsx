@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import profile from "../assets/haha.jpeg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getImage } from "../utils";
 const Avatar = ({ certificate, desc }) => {
   const { user, roles } = useSelector((state) => state.userState);
   const isAdmin = roles.includes("ADMIN");
   const isTutor = roles.includes("TUTOR");
   const isDosen = roles.includes("DOSEN");
+  const [avatarImage, setAvatarImage] = useState("");
+  // getImage
+  async function getAvatar() {
+    try {
+      const response = await getImage(certificate.avatar);
+      setAvatarImage(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  const IMG_URL = "http://localhost:8080/api/v1/image/";
+  useEffect(() => {
+    if (certificate.avatar) {
+      getAvatar();
+    }
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg h-full shadow-lg">
       <div className="avatar">
         <div className="md:w-32 w-24 mask mask-squircle">
-          <img
-            src={certificate.avatar ? IMG_URL + certificate.avatar : profile}
-            alt="profile"
-          />
+          <img src={certificate.avatar ? avatarImage : profile} alt="profile" />
         </div>
       </div>
       <h3 className="mt-4 font-medium text-sm md:text-base">

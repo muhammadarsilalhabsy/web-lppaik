@@ -5,7 +5,6 @@ import { useLoaderData } from "react-router-dom";
 const UserCertificate = () => {
   const { user } = useLoaderData();
 
-  console.log(user);
   if (!user) {
     return null;
   }

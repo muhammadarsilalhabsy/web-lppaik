@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import profile from "../assets/haha.jpeg";
-import { customFetch } from "../utils";
+import { customFetch, getImage } from "../utils";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser, updateUserProfile } from "../features/user/userSlice";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const User = ({ user, hidden }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fileRef = useRef(null);
-  const [prevImage, setPrevImage] = useState(null);
+  const [avatarImage, setAvatarImage] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -50,7 +50,26 @@ const User = ({ user, hidden }) => {
       toast.error(msg || "Something error with your input");
     }
   };
-  const IMG_URL = import.meta.env.VITE_SPRING_API_URL + "/api/v1/image/";
+
+  // getImage
+  async function getAvatar() {
+    try {
+      const response = await getImage(user.avatar);
+      setAvatarImage(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (user.avatar) {
+      if (!user.avatar.startsWith("blob:")) {
+        getAvatar();
+      }
+    }
+  }, []);
+
+  // console.log(user.avatar, user.avatar.startsWith("blob:"));
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg h-full shadow-lg">
       <div className="avatar">
@@ -70,7 +89,7 @@ const User = ({ user, hidden }) => {
                   user.avatar
                     ? user.avatar.startsWith("blob:")
                       ? user.avatar
-                      : IMG_URL + user.avatar
+                      : avatarImage
                     : profile
                 }
                 alt="profile"
@@ -81,7 +100,13 @@ const User = ({ user, hidden }) => {
         ) : (
           <div className="w-24 rounded-full">
             <img
-              src={user.avatar ? IMG_URL + user.avatar : profile}
+              src={
+                user.avatar
+                  ? user.avatar.startsWith("blob:")
+                    ? user.avatar
+                    : avatarImage
+                  : profile
+              }
               alt="profile"
             />
           </div>
