@@ -1,13 +1,19 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
+
 dayjs.locale("id");
 
-const prodURL = "http://localhost:8080/api/v1";
-const user = JSON.parse(localStorage.getItem("user"));
+const prodURL = import.meta.env.VITE_SPRING_API_URL;
+const devURL = "http://localhost:8080/api/v1";
 
+console.log(prodURL);
 export const customFetch = axios.create({
-  baseURL: prodURL,
+  baseURL: prodURL + "/api/v1",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
 });
 
 export function calculateNumber(page, count) {

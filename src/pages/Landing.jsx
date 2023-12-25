@@ -3,8 +3,13 @@ import { customFetch } from "../utils";
 
 export const loader = async () => {
   try {
-    const response = await customFetch("/activities?mandatory=true");
+    const response = await customFetch("/activities?mandatory=true", {
+      headers: {
+        Accept: "*/*",
+      },
+    });
 
+    console.log(response);
     return { activities: response.data.data };
   } catch (error) {
     console.log(error);
@@ -12,6 +17,7 @@ export const loader = async () => {
   }
 };
 const Landing = () => {
+  console.log(import.meta.env.VITE_SPRING_API_URL);
   return (
     <>
       <Hero />
