@@ -13,7 +13,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.userState.user);
   const theme = useSelector((state) => state.userState.theme);
   const isDarkTheme = theme === "dracula";
-  const IMG_URL = "http://localhost:8080/api/v1/image/";
+  const IMG_URL = import.meta.env.VITE_SPRING_API_URL + "/api/v1/image/";
 
   // hooks
   const dispatch = useDispatch();
