@@ -50,7 +50,7 @@ const User = ({ user, hidden }) => {
       toast.error(msg || "Something error with your input");
     }
   };
-  const IMG_URL = "http://localhost:8080/api/v1/image/";
+  const IMG_URL = import.meta.env.VITE_SPRING_API_URL + "/api/v1/image/";
   return (
     <div className="flex flex-col items-center justify-center p-4 bg-base-200 rounded-lg h-full shadow-lg">
       <div className="avatar">
