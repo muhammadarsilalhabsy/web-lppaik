@@ -1,21 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profile from "../assets/haha.jpeg";
 import { Link, useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SectionTitle from "./SectionTitle";
-import { customFetch } from "../utils";
+import { customFetch, getImage } from "../utils";
 import { toast } from "react-toastify";
 
 const Users = () => {
   const { roles, user } = useSelector((state) => state.userState);
   const isAdmin = roles.includes("ADMIN");
   const { users: initialUsers } = useLoaderData();
-  const IMG_URL = "http://localhost:8080/api/v1/image/";
   const [users, setUsers] = useState(initialUsers);
+  const [userImages, setUserImages] = useState({});
+
+  // getImage
+  async function getAvatar(avatar) {
+    try {
+      const response = await getImage(avatar);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   if (users.length < 1) {
     return <SectionTitle text="Kami tidak menemukan hasil pencarian anda" />;
   }
+
+  useEffect(() => {
+    const fetchUserImages = async () => {
+      const images = {};
+      // Loop through users to fetch avatars
+      for (const person of users) {
+        const { avatar, username } = person;
+        if (avatar) {
+          try {
+            const imageUrl = await getAvatar(avatar);
+            images[username] = imageUrl;
+          } catch (error) {
+            console.log(
+              `Error fetching avatar for ${username}: ${error.message}`
+            );
+          }
+        }
+      }
+      setUserImages(images);
+    };
+
+    fetchUserImages();
+  }, []);
 
   async function handleDelete(username) {
     try {
@@ -61,7 +94,7 @@ const Users = () => {
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                           <img
-                            src={avatar ? IMG_URL + avatar : profile}
+                            src={userImages[username] || profile}
                             alt={name}
                           />
                         </div>
