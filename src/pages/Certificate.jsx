@@ -11,7 +11,6 @@ export const loader = async ({ request }) => {
     try {
       const response = await customFetch(`/certificate`, { params });
 
-      console.log(response);
       return { user: response.data.data };
     } catch (error) {
       const msg = error.response.data.message;
