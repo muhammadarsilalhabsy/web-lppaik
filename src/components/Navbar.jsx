@@ -36,9 +36,11 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    if (user.avatar) {
-      if (!user.avatar.startsWith("blob:")) {
-        getAvatar();
+    if (user) {
+      if (user.avatar) {
+        if (!user.avatar.startsWith("blob:")) {
+          getAvatar();
+        }
       }
     }
   }, []);
