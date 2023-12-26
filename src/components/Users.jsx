@@ -30,7 +30,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUserImages = async () => {
       const images = {};
-      // Loop through users to fetch avatars
+
       for (const person of users) {
         const { avatar, username } = person;
         if (avatar) {

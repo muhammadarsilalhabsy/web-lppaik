@@ -3,7 +3,7 @@ import { getFormatDate } from "../utils";
 
 const ActivityList = () => {
   const { activities } = useLoaderData();
-  // console.log(activities);
+
   return (
     <div className="pt-12 grid gap-y-8">
       {activities.map((activity) => {

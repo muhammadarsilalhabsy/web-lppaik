@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useParams } from "react-router-dom";
-import { customFetch } from "../utils";
+import { customFetch, getImage } from "../utils";
 import { toast } from "react-toastify";
 import profile from "../assets/haha.jpeg";
 
@@ -9,7 +9,6 @@ const AttendanceList = ({ expired }) => {
   console.log(expired);
   const { roles, user } = useSelector((state) => state.userState);
   const params = useParams();
-  const IMG_URL = "http://localhost:8080/api/v1/image/";
   const isAdmin = roles.includes("ADMIN");
   const isKating = roles.includes("KATING");
 
@@ -18,6 +17,8 @@ const AttendanceList = ({ expired }) => {
     useLoaderData();
   const [userRegisters, setUserRegisters] = useState(initialUserRegister);
   const [users, setUsers] = useState(initialUsers);
+  const [userRegImages, setUserRegImages] = useState({});
+  const [userImages, setUserImages] = useState({});
 
   // handel function
   async function handleDelete(username) {
@@ -95,6 +96,64 @@ const AttendanceList = ({ expired }) => {
     }
   }
 
+  // getImage
+  async function getAvatar(avatar) {
+    try {
+      const response = await getImage(avatar);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchUserRegistersImages = async () => {
+      const images = {};
+
+      for (const person of userRegisters) {
+        const { avatar, username } = person;
+        if (avatar) {
+          try {
+            const imageUrl = await getAvatar(avatar);
+            images[username] = imageUrl;
+          } catch (error) {
+            console.log(
+              `Error fetching avatar for ${username}: ${error.message}`
+            );
+          }
+        }
+      }
+
+      setUserRegImages(images);
+    };
+
+    const fetchUserImages = async () => {
+      const images = {};
+
+      for (const person of users) {
+        const { avatar, username } = person;
+        if (avatar) {
+          try {
+            const imageUrl = await getAvatar(avatar);
+            images[username] = imageUrl;
+          } catch (error) {
+            console.log(
+              `Error fetching avatar for ${username}: ${error.message}`
+            );
+          }
+        }
+      }
+
+      setUserImages(images);
+    };
+    if (user && userRegisters.length !== 0) {
+      fetchUserRegistersImages();
+    }
+    if (user && users.length !== 0) {
+      fetchUserImages();
+    }
+  }, []);
+
   return (
     <div
       className={`mt-6 ${
@@ -126,7 +185,7 @@ const AttendanceList = ({ expired }) => {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <img
-                                src={avatar ? IMG_URL + avatar : profile}
+                                src={userRegImages[username] || profile}
                                 alt={name}
                               />
                             </div>
@@ -190,7 +249,7 @@ const AttendanceList = ({ expired }) => {
                           <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
                               <img
-                                src={avatar ? IMG_URL + avatar : profile}
+                                src={userImages[username] || profile}
                                 alt={name}
                               />
                             </div>
