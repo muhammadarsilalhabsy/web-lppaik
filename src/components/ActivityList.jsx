@@ -23,9 +23,11 @@ const ActivityList = () => {
 
             <div className="ml-0 sm:ml-16">
               <h2 className="capitalize font-medium text-lg">{title}</h2>
-              <h4 className="capitalize text-md text-neutral-content">
-                {location}
-              </h4>
+              {location && (
+                <h4 className="capitalize text-md text-neutral-content">
+                  {location}
+                </h4>
+              )}
             </div>
 
             <p className="font-medium text-lg ml-0 sm:ml-auto">
