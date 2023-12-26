@@ -34,13 +34,13 @@ const Login = () => {
           type="text"
           label="username"
           name="username"
-          defaultValue="21916001"
+          defaultValue="01234567"
         />
         <FormInput
           type="password"
           label="password"
           name="password"
-          defaultValue="21916001"
+          defaultValue="01234567"
         />
         <div className="mt-4">
           <SubmitButton text="login" size="btn-block" color="btn-primary" />

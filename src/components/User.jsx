@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logoutUser, updateUserProfile } from "../features/user/userSlice";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { BiSolidEditAlt } from "react-icons/bi";
 
 const User = ({ user, hidden }) => {
   const navigate = useNavigate();
@@ -82,19 +83,22 @@ const User = ({ user, hidden }) => {
               hidden
               accept="image/*"
             />
-            <div className="w-24 rounded-full">
-              <img
-                onClick={() => fileRef.current.click()}
-                src={
-                  user.avatar
-                    ? user.avatar.startsWith("blob:")
-                      ? user.avatar
-                      : avatarImage
-                    : profile
-                }
-                alt="profile"
-                className="cursor-pointer"
-              />
+            <div className="avatar relative ">
+              <BiSolidEditAlt className="w-5 h-5 absolute bottom-0 right-0 z-[99]" />
+              <div className="w-24 rounded-full">
+                <img
+                  onClick={() => fileRef.current.click()}
+                  src={
+                    user.avatar
+                      ? user.avatar.startsWith("blob:")
+                        ? user.avatar
+                        : avatarImage
+                      : profile
+                  }
+                  alt="profile"
+                  className="cursor-pointer"
+                />
+              </div>
             </div>
           </>
         ) : (
@@ -112,6 +116,7 @@ const User = ({ user, hidden }) => {
           </div>
         )}
       </div>
+
       <h3 className="mt-4 font-medium text-sm md:text-base">
         ID: {user.username}
       </h3>
