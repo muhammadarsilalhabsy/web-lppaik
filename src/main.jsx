@@ -14,14 +14,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
       <ToastContainer
         position="top-center"
-        // autoClose={1250}
+        autoClose={1250}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick={false}
         rtl={false}
-        pauseOnFocusLoss={true}
+        pauseOnFocusLoss={false}
         draggable={false}
-        pauseOnHover={true}
+        pauseOnHover={false}
       />
     </Provider>
   </>
