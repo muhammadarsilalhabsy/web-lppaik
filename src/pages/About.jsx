@@ -14,11 +14,10 @@ const About = () => {
         </div>
       </div>
       <p className="mt-6 text-lg leading-8 max-w-2xl mx-auto">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi
-        doloremque natus aut velit delectus, quia porro voluptatem voluptates
-        perspiciatis eveniet aspernatur officiis unde vitae in, veritatis hic
-        pariatur odio explicabo. Amet non aliquid reprehenderit, unde a
-        recusandae nobis ab! Ipsam.
+        LPPAIK Universitas Muhammadiyah Kendari adalah lembaga yang berdedikasi
+        tinggi dalam mewujudkan visi luhurnya, yaitu menjadikan civitas akademik
+        Universitas Muhammadiyah Kendari sebagai komunitas yang bebas buta Baca
+        Tulis Al-Qur'an (BTQ), bertakwa, dan berakhlakul karima.
       </p>
     </>
   );

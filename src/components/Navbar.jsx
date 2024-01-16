@@ -7,6 +7,7 @@ import { logoutUser, toggleTheme } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { customFetch, getImage } from "../utils";
 import UserLinks from "./UserLinks";
+import logo from "../assets/logo-4.png";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
@@ -68,10 +69,16 @@ const Navbar = () => {
           {/* TITLE */}
           <NavLink
             to="/"
+            className="hidden lg:flex btn btn-primary items-center px-1"
+          >
+            <img src={logo} alt="logo" className="bg-contain w-70 h-10" />
+          </NavLink>
+          {/* <NavLink
+            to="/"
             className="hidden lg:flex btn btn-primary text-3xl items-center"
           >
             L
-          </NavLink>
+          </NavLink> */}
           {/* DROPDOWN */}
           <div className="dropdown">
             <label tabIndex={0} className="btn-ghost btn lg:hidden">
