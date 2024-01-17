@@ -4,7 +4,7 @@ import SectionTitle from "./SectionTitle";
 const FeaturedActivities = () => {
   return (
     <div className="pt-24">
-      <SectionTitle text="Kegaitan wajib" size="text-xl" />
+      <SectionTitle text="Kegiatan Rutin" size="text-xl" />
       <ActivityGrid />
     </div>
   );

@@ -54,7 +54,7 @@ const ActivityInput = ({
       <div className="flex justify-evenly">
         <FormCheckbox
           name="mandatory"
-          label="Wajib"
+          label="Rutin"
           size="checkbox-sm"
           defaultChecked={mandatory}
         />

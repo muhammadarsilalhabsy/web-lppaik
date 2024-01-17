@@ -9,7 +9,6 @@ export const loader = async () => {
       },
     });
 
-    console.log(response);
     return { activities: response.data.data };
   } catch (error) {
     console.log(error);
@@ -17,7 +16,6 @@ export const loader = async () => {
   }
 };
 const Landing = () => {
-  console.log(import.meta.env.VITE_SPRING_API_URL);
   return (
     <>
       <Hero />

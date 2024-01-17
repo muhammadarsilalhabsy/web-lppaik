@@ -224,7 +224,7 @@ const SingleActivity = () => {
         <img
           src={images[0]}
           alt={title}
-          className="h-96 w-full object-cover rounded-lg"
+          className="h-96 w-full object-cover rounded-lg bg-base-200"
         />
         {/* Detail */}
         <div>
