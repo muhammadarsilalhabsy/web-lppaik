@@ -64,7 +64,7 @@ export const loader =
     ]);
 
     try {
-      const [response1, response2, response3] = await Promise.all([
+      const [response1, response2, response3, response4] = await Promise.all([
         customFetch(`/users/${params.id}`),
         customFetch(`/users/control-book/${params.id}`, {
           params: reqParams,
@@ -78,6 +78,7 @@ export const loader =
             "X-API-TOKEN": `${user.token}`,
           },
         }),
+        customFetch(`/email/verify/${params.id}`),
       ]);
 
       return {
@@ -86,6 +87,7 @@ export const loader =
         pagination: response2.data.pagination,
         activities: response3.data.data,
         paging: response3.data.pagination,
+        emailRes: response4.data.data,
       };
     } catch (error) {
       console.log(error);
@@ -97,15 +99,19 @@ export const loader =
 
 // components
 const SingleUser = () => {
-  const { roles, show } = useSelector((state) => state.userState);
+  const { roles, show, user: access } = useSelector((state) => state.userState);
+  const [isSend, setIsSend] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const isAdmin = roles.includes("ADMIN");
   const isTutor = roles.includes("TUTOR");
   const isDosen = roles.includes("DOSEN");
 
-  const { user } = useLoaderData();
+  const { user, emailRes } = useLoaderData();
 
+  console.log(isSubmitting);
+  console.log(user);
   const dispatch = useDispatch();
 
   function handleBtq() {
@@ -116,8 +122,53 @@ const SingleUser = () => {
     dispatch(setShow("kegiatan"));
     navigate(`/users/${params.id}`);
   }
+
+  // handle function
+  const handleSendEmail = async () => {
+    setIsSubmitting(true);
+    try {
+      const response = await customFetch.post(
+        `/email/verify/${params.id}`,
+        null,
+        {
+          headers: {
+            "X-API-TOKEN": `${access.token}`,
+          },
+        }
+      );
+      const msg = response.data.message;
+      toast.success(msg || "Success Send Email");
+      setIsSend(true);
+    } catch (error) {
+      console.log(error);
+      const msg = error.response.data.message;
+      toast.error(msg || "Something error with the operation");
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
+      {!emailRes.id && !user.certificate && (isAdmin || isTutor) && (
+        <div className="flex justify-end mb-4">
+          <button
+            className="btn btn-success btn-sm"
+            onClick={handleSendEmail}
+            disabled={isSend || isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="loading loading-spinner"></span> sending...
+              </>
+            ) : (
+              "Rekomendasi mampu BTQ"
+            )}
+          </button>
+        </div>
+      )}
+
       <div className="grid gap-4 md:grid-cols-3 items-start">
         <User user={user} hidden={true} />
         <div className="md:col-span-2">

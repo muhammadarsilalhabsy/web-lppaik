@@ -16,7 +16,7 @@ export const loader =
     //   toast.warn("You must be logged in to checkout!");
     //   return redirect("/login");
     // }
-    console.log(params);
+    // console.log(params);
     try {
       const response = await customFetch.get("/users", {
         params,
@@ -24,7 +24,7 @@ export const loader =
           "X-API-TOKEN": `${user.token}`,
         },
       });
-      console.log(response);
+      // console.log(response);
       return {
         users: response.data.data,
         pagination: response.data.pagination,
