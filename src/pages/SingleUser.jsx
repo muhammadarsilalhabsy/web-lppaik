@@ -110,8 +110,6 @@ const SingleUser = () => {
 
   const { user, emailRes } = useLoaderData();
 
-  console.log(isSubmitting);
-  console.log(user);
   const dispatch = useDispatch();
 
   function handleBtq() {

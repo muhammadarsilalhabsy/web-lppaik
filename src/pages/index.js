@@ -21,3 +21,4 @@ export { default as VipRoutes } from "./VipRoutes";
 export { default as VvipRoutes } from "./VvipRoutes";
 export { default as EditControlBook } from "./EditControlBook";
 export { default as UpdatePassword } from "./UpdatePassword";
+export { default as EmailVerification } from "./EmailVerification";

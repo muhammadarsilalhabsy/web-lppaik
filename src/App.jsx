@@ -23,6 +23,7 @@ import {
   UpdatePassword,
   VipRoutes,
   VvipRoutes,
+  EmailVerification,
 } from "./pages";
 
 import { ErrorElement } from "./components";
@@ -38,6 +39,7 @@ import { loader as singleActivityLoader } from "./pages/SingleActivity";
 import { loader as singleUserLoader } from "./pages/SingleUser";
 import { loader as ladingLoader } from "./pages/Landing";
 import { loader as certificateLoader } from "./pages/Certificate";
+import { loader as certificateValidateLoader } from "./pages/EmailVerification";
 import { loader as createUserLoader } from "./pages/CreateUsers";
 import { loader as editUserLoader } from "./pages/EditUser";
 import { loader as editControlBookLoader } from "./pages/EditControlBook";
@@ -90,7 +92,22 @@ const router = createBrowserRouter([
         element: <Certificate />,
         errorElement: <ErrorElement />,
         loader: certificateLoader,
+        // children: [
+        //   {
+        //     path: "validate",
+        //     element: <EmailVerification />,
+        //     errorElement: <ErrorElement />,
+        //     loader: certificateValidateLoader,
+        //   },
+        // ],
       },
+      {
+        path: "email/verify",
+        element: <EmailVerification />,
+        errorElement: <ErrorElement />,
+        loader: certificateValidateLoader,
+      },
+
       {
         element: <PrivateRoutes />,
         children: [
