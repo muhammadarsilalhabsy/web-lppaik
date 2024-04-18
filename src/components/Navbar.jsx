@@ -69,7 +69,7 @@ const Navbar = () => {
           {/* TITLE */}
           <NavLink
             to="/"
-            className="hidden lg:flex btn bg-white items-center px-1"
+            className="hidden lg:flex btn bg-white hover:bg-white/75 items-center px-1"
           >
             <img src={logo} alt="logo" className="bg-contain w-70 h-10" />
           </NavLink>
