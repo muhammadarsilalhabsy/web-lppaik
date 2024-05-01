@@ -66,12 +66,13 @@ const Users = () => {
       });
       const msg = response.data.message;
       toast.success(msg || "Success delete");
-
+      console.log(location.search);
       setUsers(users.filter((user) => user.username !== username));
-      if (location.pathname.includes("identity")) {
-        console.log(location.pathname);
+      const queryParams = new URLSearchParams(location.search);
+      if (queryParams.has("identity")) {
         navigate("/users");
       }
+
       console.log(response);
     } catch (error) {
       const msg = error.response.data.message;
