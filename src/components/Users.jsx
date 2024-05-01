@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import profile from "../assets/haha.jpeg";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 import SectionTitle from "./SectionTitle";
 import { customFetch, getImage } from "../utils";
@@ -13,6 +18,8 @@ const Users = () => {
   const [users, setUsers] = useState(initialUsers);
   const [userImages, setUserImages] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+
   // getImage
   async function getAvatar(avatar) {
     try {
@@ -61,7 +68,10 @@ const Users = () => {
       toast.success(msg || "Success delete");
 
       setUsers(users.filter((user) => user.username !== username));
-      navigate("/users");
+      if (location.pathname.includes("identity")) {
+        console.log(location.pathname);
+        navigate("/users");
+      }
       console.log(response);
     } catch (error) {
       const msg = error.response.data.message;
